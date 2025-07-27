@@ -17,7 +17,7 @@ public class GasOPP extends JFrame {
     }
 
     public void iniFrame() {
-        setSize(1200, 800);
+        setSize(GasConstants.WINDOW_WIDTH, GasConstants.WINDOW_HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Jewel Suite");
         setLocationRelativeTo(null);
@@ -60,15 +60,21 @@ public class GasOPP extends JFrame {
     }
 
     public JPanel createPanelCenter() {
-        int count = 500;
+        int count = 200;
         JPanel panelCenter = new JPanel();
-        panelCenter.setLayout(new GridLayout(20, 20));
+        panelCenter.setLayout(new GridLayout(10, 20));
         panelCenter.setBackground(Color.cyan);
 
         JButton[] buttons = new JButton[count];
         for (int i = 0; i < count; i++) {
-            buttons[i] = new JButton("");
+            buttons[i] = new JButton();
+            buttons[i].setLayout(new BorderLayout());
             buttons[i].setBackground(randomColor());
+
+            JLabel text = new JLabel(randomPer() + "%");
+            text.setFont(new Font("Arial", Font.BOLD, 9));
+            
+            buttons[i].add(text, BorderLayout.SOUTH);
             panelCenter.add(buttons[i]);
         }
         return panelCenter;
@@ -80,12 +86,17 @@ public class GasOPP extends JFrame {
         return colors[index];
     }
 
+    public String randomPer() {
+        int num = (int)(Math.random() * 100) + 1;
+        return String.valueOf(num);
+    }
+
     public void createPanelDimetion() {
         JPanel panelWest = new JPanel();
-        panelWest.setPreferredSize(new Dimension(40, 0));
+        panelWest.setPreferredSize(new Dimension(60, 0));
 
         JPanel panelEast = new JPanel();
-        panelEast.setPreferredSize(new Dimension(40, 0));
+        panelEast.setPreferredSize(new Dimension(60, 0));
 
         add(panelWest, BorderLayout.WEST);
         add(panelEast, BorderLayout.EAST);
@@ -108,14 +119,22 @@ public class GasOPP extends JFrame {
         colorGreen.setPreferredSize(new Dimension(40, 40));
         colorGreen.setBackground(Color.green);
 
+        JLabel textRed = new JLabel("RED not have gas");
+        textRed.setFont(new Font("Arial", Font.BOLD, 14));
+        
+        JLabel textYellow = new JLabel("Yellow Gas < 50%");
+        textYellow.setFont(new Font("Arial", Font.BOLD, 14));
+        
+        JLabel textGreen = new JLabel("Green Gas > 50%");    
+        textGreen.setFont(new Font("Arial", Font.BOLD, 14));
+
         panelNorth.add(colorRED);
+        panelNorth.add(textRed);
         panelNorth.add(colorYellow);
+        panelNorth.add(textYellow);
         panelNorth.add(colorGreen);
+        panelNorth.add(textGreen);
 
         return panelNorth;
-    }
-
-    public static void main(String[] args) {
-        new GasOPP();
     }
 }
