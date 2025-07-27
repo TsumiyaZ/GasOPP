@@ -37,45 +37,48 @@ public class DisplayFrame extends JFrame {
     }
 
     public JPanel panel_north() {
-        JPanel panelNorth = new JPanel();
-        panelNorth.setBackground(new Color(255, 193, 218)); // ชมพูอ่อน
-        panelNorth.setLayout(new BorderLayout());
+    JPanel panelNorth = new JPanel();
+    panelNorth.setBackground(new Color(255, 193, 218));
+    panelNorth.setLayout(new BorderLayout());
 
-        JLabel label = new JLabel("Fluid Contact Depth");
-        label.setBorder(BorderFactory.createEmptyBorder(0, 440, 0, 10)); // top, left, bottom, right
-        panelNorth.add(label, BorderLayout.WEST);
+    // -- กลาง: รวม Label + TextArea + ปุ่ม --
+    JPanel panel_centerAll = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+    panel_centerAll.setBackground(new Color(255, 193, 218));
 
-        JPanel panel_centerJPanel = new JPanel(new FlowLayout());
-        panel_centerJPanel.setBackground(new Color(255, 193, 218));
-        JTextArea text = new JTextArea();
-        text.setPreferredSize(new Dimension(300, 50));
-        text.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        panel_centerJPanel.add(text);
-        panelNorth.add(panel_centerJPanel);
+    JLabel label = new JLabel("Fluid Contact Depth:");
+    panel_centerAll.add(label);
 
-        JPanel panel_East = new JPanel(new GridLayout(2, 1, 50, 10));
-        panel_East.setBackground(new Color(255, 193, 218));
-        panel_East.add(new JButton("CALCULATE"));
-        panel_East.add(new JButton("CLEAR"));
+    JTextArea text = new JTextArea();
+    text.setPreferredSize(new Dimension(300, 50));
+    text.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    panel_centerAll.add(text);
 
-        panelNorth.add(panel_East, BorderLayout.EAST);
+    // Panel ปุ่ม (CALCULATE / CLEAR)
+    JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 5, 5));
+    buttonPanel.setBackground(new Color(255, 193, 218));
+    buttonPanel.add(new JButton("CALCULATE"));
+    buttonPanel.add(new JButton("CLEAR"));
 
+    panel_centerAll.add(buttonPanel);
 
-        JPanel panel_southJPanel = new JPanel(new FlowLayout());
-        panel_southJPanel.setBackground(new Color(255, 193, 218));
+    panelNorth.add(panel_centerAll, BorderLayout.CENTER);
 
-        JButton button_openFile = new JButton("OPEN FILE");
-        button_openFile.setPreferredSize(new Dimension(250, 35));
-        panel_southJPanel.add(button_openFile);
-        panelNorth.add(panel_southJPanel, BorderLayout.SOUTH);
+    // -- ปุ่ม OPEN FILE ด้านล่าง --
+    JPanel panel_southJPanel = new JPanel(new FlowLayout());
+    panel_southJPanel.setBackground(new Color(255, 193, 218));
+    JButton button_openFile = new JButton("OPEN FILE");
+    button_openFile.setPreferredSize(new Dimension(250, 35));
+    panel_southJPanel.add(button_openFile);
+    panelNorth.add(panel_southJPanel, BorderLayout.SOUTH);
 
-        JPanel panel_norhJPanel = new JPanel();
-        panel_norhJPanel.setBackground(new Color(255, 193, 218));
-        panel_norhJPanel.setPreferredSize(new Dimension(0, 10));
-        panelNorth.add(panel_norhJPanel, BorderLayout.NORTH);
-        
-        return panelNorth;   
-    }
+    // -- Padding ด้านบน --
+    JPanel panel_northPadding = new JPanel();
+    panel_northPadding.setBackground(new Color(255, 193, 218));
+    panel_northPadding.setPreferredSize(new Dimension(0, 10));
+    panelNorth.add(panel_northPadding, BorderLayout.NORTH);
+
+    return panelNorth;
+}
 
     public void createButton(int count, JPanel panel) {
         JButton[] button = new JButton[count];
