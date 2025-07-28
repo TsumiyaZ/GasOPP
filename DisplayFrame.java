@@ -88,6 +88,7 @@ public class DisplayFrame extends JFrame {
         setTitle("Jewel Suite");
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+        setResizable(false);
 
         getContentPane().setBackground(GasConstants.COLOR_WINDOW);
 
@@ -179,8 +180,8 @@ public class DisplayFrame extends JFrame {
         panel.setBackground(GasConstants.COLOR_WINDOW);
 
         JPanel panel_center = new JPanel(new GridLayout(10, 20));
-        panel_center.setBackground(Color.white);
-        panel_center.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+        panel_center.setBackground(new Color(103, 13, 47));
+        panel_center.setBorder(BorderFactory.createLineBorder(new Color(103, 13, 47), 3));
     
         createButton(200, panel_center);
         setPaddingEvery(panel);
