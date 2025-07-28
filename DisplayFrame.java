@@ -17,12 +17,12 @@ public class DisplayFrame extends JFrame {
 
     public void setPadding() {
         JPanel panel_west = new JPanel();
-        panel_west.setPreferredSize(new Dimension(20, 0));
-        panel_west.setBackground(new Color(255, 193, 218));
+        panel_west.setPreferredSize(new Dimension(40, 0));
+        panel_west.setBackground(GasConstants.COLOR_WINDOW);
 
         JPanel panel_east = new JPanel();
-        panel_east.setPreferredSize(new Dimension(20, 0));
-        panel_east.setBackground(new Color(255, 193, 218));
+        panel_east.setPreferredSize(new Dimension(40, 0));
+        panel_east.setBackground(GasConstants.COLOR_WINDOW);
 
         add(panel_east, BorderLayout.EAST);
         add(panel_west, BorderLayout.WEST);
@@ -31,8 +31,9 @@ public class DisplayFrame extends JFrame {
     public JPanel panel_south() {
         JPanel panel = new JPanel(new FlowLayout());
 
-        panel.setBackground(new Color(255, 193, 218));
+        panel.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
         panel.setPreferredSize(new Dimension(0, 60));
+        panel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
 
         // สร้าง Box_red
         JPanel Box_red = new JPanel();
@@ -88,19 +89,19 @@ public class DisplayFrame extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        getContentPane().setBackground(new Color(255, 193, 218));
+        getContentPane().setBackground(GasConstants.COLOR_WINDOW);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public JPanel panel_north() {
         JPanel panelNorth = new JPanel();
-        panelNorth.setBackground(new Color(255, 193, 218));
+        panelNorth.setBackground(GasConstants.COLOR_WINDOW);
         panelNorth.setLayout(new BorderLayout());
 
         // -- Center : รวม Label + TextArea + ปุ่ม -- //
         JPanel panel_centerAll = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        panel_centerAll.setBackground(new Color(255, 193, 218));
+        panel_centerAll.setBackground(GasConstants.COLOR_WINDOW);
 
         // Label
         JLabel label = new JLabel("Fluid Contact Depth:");
@@ -115,7 +116,7 @@ public class DisplayFrame extends JFrame {
 
         // Panel ปุ่ม (CALCULATE / CLEAR) -- add เข้า Center
         JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 5, 5));
-        buttonPanel.setBackground(new Color(255, 193, 218));
+        buttonPanel.setBackground(GasConstants.COLOR_WINDOW);
 
         JButton button_cal = new JButton("CALCULATE");
         button_cal.setPreferredSize(new Dimension(120, 25));
@@ -136,7 +137,7 @@ public class DisplayFrame extends JFrame {
 
         // SOUTH : -- ปุ่ม OPEN FILE ด้านล่าง
         JPanel panel_southJPanel = new JPanel(new FlowLayout());
-        panel_southJPanel.setBackground(new Color(255, 193, 218));
+        panel_southJPanel.setBackground(GasConstants.COLOR_WINDOW);
         panel_southJPanel.setPreferredSize(new Dimension(0, 55));
 
         JButton button_openFile = new JButton("OPEN FILE");
@@ -150,7 +151,7 @@ public class DisplayFrame extends JFrame {
         // NORTH : -- Padding ด้านบน --
         JPanel panel_northPadding = new JPanel();
 
-        panel_northPadding.setBackground(new Color(255, 193, 218));
+        panel_northPadding.setBackground(GasConstants.COLOR_WINDOW);
         panel_northPadding.setPreferredSize(new Dimension(0, 10));
 
         panelNorth.add(panel_northPadding, BorderLayout.NORTH);
@@ -174,13 +175,41 @@ public class DisplayFrame extends JFrame {
     }
 
     public JPanel panel_center() {
-        JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
-        panel.setBackground(Color.white);
-        panel.setLayout(new GridLayout(10, 20));
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(GasConstants.COLOR_WINDOW);
 
-        createButton(200, panel);
+        JPanel panel_center = new JPanel(new GridLayout(10, 20));
+        panel_center.setBackground(Color.white);
+        panel_center.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+    
+        createButton(200, panel_center);
+        setPaddingEvery(panel);
+
+        panel.add(panel_center, BorderLayout.CENTER);
 
         return panel;
+    }
+
+    public void setPaddingEvery(JPanel panel) {
+        JPanel padding_south = new JPanel();
+        padding_south.setPreferredSize(new Dimension(0, 25));
+        padding_south.setBackground(GasConstants.COLOR_WINDOW);
+
+        JPanel padding_east = new JPanel();
+        padding_east.setPreferredSize(new Dimension(25, 0));
+        padding_east.setBackground(GasConstants.COLOR_WINDOW);
+
+        JPanel padding_west = new JPanel();
+        padding_west.setPreferredSize(new Dimension(25, 0));
+        padding_west.setBackground(GasConstants.COLOR_WINDOW);
+
+        JPanel padding_north = new JPanel();
+        padding_north.setPreferredSize(new Dimension(0, 25));
+        padding_north.setBackground(GasConstants.COLOR_WINDOW);
+
+        panel.add(padding_north, BorderLayout.NORTH);
+        panel.add(padding_south, BorderLayout.SOUTH);
+        panel.add(padding_east, BorderLayout.EAST);
+        panel.add(padding_west, BorderLayout.WEST);
     }
 }
