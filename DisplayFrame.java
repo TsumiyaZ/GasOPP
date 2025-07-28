@@ -18,10 +18,10 @@ public class DisplayFrame extends JFrame {
     public void setPadding() {
         JPanel panel_west = new JPanel();
         panel_west.setPreferredSize(new Dimension(20, 0));
+        panel_west.setBackground(new Color(255, 193, 218));
+
         JPanel panel_east = new JPanel();
         panel_east.setPreferredSize(new Dimension(20, 0));
-
-        panel_west.setBackground(new Color(255, 193, 218));
         panel_east.setBackground(new Color(255, 193, 218));
 
         add(panel_east, BorderLayout.EAST);
@@ -30,6 +30,7 @@ public class DisplayFrame extends JFrame {
 
     public JPanel panel_south() {
         JPanel panel = new JPanel(new FlowLayout());
+
         panel.setBackground(new Color(255, 193, 218));
         panel.setPreferredSize(new Dimension(0, 60));
 
@@ -40,6 +41,7 @@ public class DisplayFrame extends JFrame {
         Box_red.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
         JLabel red = new JLabel("RED is Gas 0%");
+        red.setFont(new Font("Arial", Font.BOLD, 14));
 
         panel.add(Box_red);
         panel.add(red);
@@ -51,6 +53,7 @@ public class DisplayFrame extends JFrame {
         Box_Yellow.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
         JLabel Yellow = new JLabel("Yellow is Gas < 50%");
+        Yellow.setFont(new Font("Arial", Font.BOLD, 14));
 
         panel.add(Box_Yellow);
         panel.add(Yellow);
@@ -60,11 +63,21 @@ public class DisplayFrame extends JFrame {
         Box_Green.setBackground(Color.green);
         Box_Green.setPreferredSize(new Dimension(45, 45));
         Box_Green.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        
 
         JLabel green = new JLabel("Green is Gas > 50%");
+        green.setFont(new Font("Arial", Font.BOLD, 14));
 
         panel.add(Box_Green);
         panel.add(green);
+
+        JButton button_about = new JButton("About Group");
+        button_about.setBackground(new Color(244, 235, 211));
+        button_about.setPreferredSize(new Dimension(200, 30));
+        button_about.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+        button_about.setFont(new Font("Arial", Font.BOLD, 14));
+        
+        panel.add(button_about);
 
         return panel;
     }
@@ -102,8 +115,8 @@ public class DisplayFrame extends JFrame {
 
         // Panel ปุ่ม (CALCULATE / CLEAR) -- add เข้า Center
         JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 5, 5));
-
         buttonPanel.setBackground(new Color(255, 193, 218));
+
         JButton button_cal = new JButton("CALCULATE");
         button_cal.setPreferredSize(new Dimension(120, 25));
         button_cal.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -162,7 +175,8 @@ public class DisplayFrame extends JFrame {
 
     public JPanel panel_center() {
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(255, 193, 218));
+        panel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+        panel.setBackground(Color.white);
         panel.setLayout(new GridLayout(10, 20));
 
         createButton(200, panel);
