@@ -63,12 +63,12 @@ public class PanelManager {
         panelNorth.setLayout(new BorderLayout());
 
         // -- Center : รวม Label + TextArea + ปุ่ม -- //
-        JPanel panel_centerAll = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JPanel panel_centerAll = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         panel_centerAll.setBackground(GasConstants.COLOR_WINDOW);
 
         // Label
         JLabel label = new JLabel("Fluid Contact Depth:");
-        label.setFont(new Font("Arial", Font.BOLD, 12));
+        label.setFont(new Font("Arial", Font.BOLD, 15));
         panel_centerAll.add(label);
 
         // TextArea
@@ -84,10 +84,12 @@ public class PanelManager {
         JButton button_cal = new JButton("CALCULATE");
         button_cal.setPreferredSize(new Dimension(120, 25));
         button_cal.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        button_cal.setBackground(new Color(244, 235, 211));
 
         JButton button_clear = new JButton("CLEAR");
         button_clear.setPreferredSize(new Dimension(120, 25));
         button_clear.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        button_clear.setBackground(new Color(244, 235, 211));
 
         buttonPanel.add(button_cal);
         buttonPanel.add(button_clear);
@@ -106,7 +108,8 @@ public class PanelManager {
         JButton button_openFile = new JButton("OPEN FILE");
         button_openFile.setPreferredSize(new Dimension(300, 35));
         button_openFile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-
+        button_openFile.setBackground(new Color(244, 235, 211));
+        panel_southJPanel.add(Box.createRigidArea(new Dimension(20, 0)));
 
         panel_southJPanel.add(button_openFile);
         panelNorth.add(panel_southJPanel, BorderLayout.SOUTH);
