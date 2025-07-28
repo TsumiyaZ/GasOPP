@@ -109,7 +109,7 @@ public class PanelManager {
         button_openFile.setPreferredSize(new Dimension(300, 35));
         button_openFile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         button_openFile.setBackground(new Color(244, 235, 211));
-        panel_southJPanel.add(Box.createRigidArea(new Dimension(20, 0)));
+        panel_southJPanel.add(Box.createRigidArea(new Dimension(30, 0)));
 
         panel_southJPanel.add(button_openFile);
         panelNorth.add(panel_southJPanel, BorderLayout.SOUTH);
