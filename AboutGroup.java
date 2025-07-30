@@ -1,7 +1,9 @@
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
@@ -47,7 +49,9 @@ public class AboutGroup extends JFrame{
 
     public JButton create_Button_Back() {
         JButton backToHome = new JButton("Back");
-        backToHome.setPreferredSize(new Dimension(400, 100));
+        backToHome.setPreferredSize(new Dimension(300, 50));
+        backToHome.setBackground(GasConstants.COLOR_WINDOW);
+        backToHome.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         return backToHome;
     }
 }
