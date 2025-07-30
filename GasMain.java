@@ -3,5 +3,12 @@ public class GasMain {
         DisplayFrame start = new DisplayFrame();
         start.setVisible(true);
         System.out.println("hello world");
+
+        System.out.println("Helksjdflksdklfsdkf");
+        System.out.println("Helksjdflksdklfsdkf");
+        System.out.println("Helksjdflksdklfsdkf");
+        System.out.println("Helksjdflksdklfsdkf");
+        System.out.println("Helksjdflksdklfsdkf");
+        System.out.println("Helksjdflksdklfsdkf");
     }
 }
