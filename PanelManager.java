@@ -2,6 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PanelManager {
+    private DisplayFrame FrameMain;
+
+    public PanelManager(DisplayFrame frame) {
+        this.FrameMain = frame;
+    }
+
     public JPanel panel_south() {
         JPanel panel = new JPanel(new FlowLayout());
 
@@ -53,10 +59,20 @@ public class PanelManager {
         
         panel.add(button_about);
 
+        // เมือกดปุ่ม about จะขึ้น frame ใหม่
+        button_about.addActionListener(e -> {
+            AboutGroup about = new AboutGroup(FrameMain);
+            // เปิดหน้า about
+            about.setVisible(true);
+
+            //ปิดหน้าหลักชั่วคราว
+            FrameMain.setVisible(false);
+        });
+
         return panel;
     }
 
-        public JPanel panel_north() {
+    public JPanel panel_north() {
         JPanel panelNorth = new JPanel();
         panelNorth.setBackground(GasConstants.COLOR_WINDOW);
         panelNorth.setLayout(new BorderLayout());
