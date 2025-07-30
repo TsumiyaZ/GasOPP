@@ -44,7 +44,7 @@ public class PanelManager {
         panel.add(green);
 
         JButton button_about = new JButton("About Group");
-        button_about.setBackground(new Color(244, 235, 211));
+        button_about.setBackground(new Color(196, 217, 255));
         button_about.setPreferredSize(new Dimension(200, 30));
         button_about.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         button_about.setFont(new Font("Arial", Font.BOLD, 14));
@@ -90,7 +90,7 @@ public class PanelManager {
 
         JPanel panel_center = new JPanel(new GridLayout(10, 20));
         panel_center.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
-        panel_center.setBorder(BorderFactory.createLineBorder(GasConstants.COLOR_WINDOW_SOUTH, 20));
+        panel_center.setBorder(BorderFactory.createLineBorder(GasConstants.COLOR_WINDOW_SOUTH, 40));
     
         createButton(200, panel_center);
         setPaddingEvery(panel);
@@ -162,7 +162,7 @@ public class PanelManager {
         JPanel panel_centerAll = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 50));
         panel_centerAll.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
 
-        JLabel label = new JLabel("Fluid Contact Depth:");
+        JLabel label = new JLabel("Fluid Contact Depth :");
         label.setFont(new Font("Arial", Font.BOLD, 17));
         panel_centerAll.add(label);
 
@@ -178,17 +178,17 @@ public class PanelManager {
         JButton button_cal = new JButton("CALCULATE");
         button_cal.setPreferredSize(new Dimension(300, 50));
         button_cal.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        button_cal.setBackground(new Color(244, 235, 211));
+        button_cal.setBackground(new Color(196, 217, 255));
 
         JButton button_clear = new JButton("CLEAR");
         button_clear.setPreferredSize(new Dimension(120, 25));
         button_clear.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        button_clear.setBackground(new Color(244, 235, 211));
+        button_clear.setBackground(new Color(196, 217, 255));
 
         JButton button_openFile = new JButton("OPEN FILE");
         button_openFile.setPreferredSize(new Dimension(300, 35));
         button_openFile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        button_openFile.setBackground(new Color(244, 235, 211));
+        button_openFile.setBackground(new Color(196, 217, 255));
         
         buttonPanel.add(button_openFile);
         buttonPanel.add(button_cal);
