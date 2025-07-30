@@ -10,7 +10,7 @@ public class DisplayFrame extends JFrame {
         JPanel panel_center = PanelManager.panel_center();
         JPanel panel_south = PanelManager.panel_south();
         JPanel panel_East = PanelManager.panel_East();
-
+        
         setPadding();
 
         add(panel_south, BorderLayout.SOUTH);
