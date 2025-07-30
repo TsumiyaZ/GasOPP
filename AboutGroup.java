@@ -2,10 +2,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import javax.swing.border.Border;
+import java.awt.*;
 
 public class AboutGroup extends JFrame{
 
@@ -55,6 +53,34 @@ public class AboutGroup extends JFrame{
         backToHome.setPreferredSize(new Dimension(300, 50));
         backToHome.setBackground(GasConstants.COLOR_WINDOW);
         backToHome.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        
         return backToHome;
     }
+
+    
 }
+
+/* class RoundedBorder implements Border {
+    private int radius;
+
+    RoundedBorder(int radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public Insets getBorderInsets(Component c) {
+        return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
+    }
+
+    @Override
+    public boolean isBorderOpaque() {
+        return false;
+    }
+
+    @Override
+    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+        g.setColor(Color.BLACK); // สีขอบปุ่ม
+        g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+    }
+}
+ */
