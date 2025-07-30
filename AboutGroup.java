@@ -2,7 +2,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class AboutGroup extends JFrame{
