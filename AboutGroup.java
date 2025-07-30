@@ -19,6 +19,8 @@ public class AboutGroup extends JFrame{
         setLayout(new BorderLayout());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
+        getContentPane().setBackground(GasConstants.COLOR_WINDOW_SOUTH);
+
         P_south();
         
     }    
@@ -43,6 +45,7 @@ public class AboutGroup extends JFrame{
     public JPanel create_Panel_South() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
+        panel.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
 
         return panel;
     }
