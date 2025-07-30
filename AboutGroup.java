@@ -53,6 +53,7 @@ public class AboutGroup extends JFrame{
         backToHome.setPreferredSize(new Dimension(300, 50));
         backToHome.setBackground(GasConstants.COLOR_WINDOW);
         backToHome.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        backToHome.setFocusPainted(false);
         
         return backToHome;
     }

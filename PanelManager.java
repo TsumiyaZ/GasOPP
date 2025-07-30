@@ -56,6 +56,7 @@ public class PanelManager {
         button_about.setPreferredSize(new Dimension(200, 30));
         button_about.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         button_about.setFont(new Font("Arial", Font.BOLD, 14));
+        button_about.setFocusPainted(false);
         
         panel.add(button_about);
 
@@ -197,16 +198,19 @@ public class PanelManager {
         button_cal.setPreferredSize(new Dimension(300, 50));
         button_cal.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         button_cal.setBackground(new Color(196, 217, 255));
+        button_cal.setFocusPainted(false);
 
         JButton button_clear = new JButton("CLEAR");
         button_clear.setPreferredSize(new Dimension(120, 25));
         button_clear.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         button_clear.setBackground(new Color(196, 217, 255));
+        button_clear.setFocusPainted(false);
 
         JButton button_openFile = new JButton("OPEN FILE");
         button_openFile.setPreferredSize(new Dimension(300, 35));
         button_openFile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         button_openFile.setBackground(new Color(196, 217, 255));
+        button_openFile.setFocusPainted(false);
         
         buttonPanel.add(button_openFile);
         buttonPanel.add(button_cal);
