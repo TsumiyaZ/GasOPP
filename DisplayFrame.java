@@ -9,12 +9,14 @@ public class DisplayFrame extends JFrame {
         JPanel panel_north = PanelManager.panel_north();
         JPanel panel_center = PanelManager.panel_center();
         JPanel panel_south = PanelManager.panel_south();
+        JPanel panel_East = PanelManager.panel_East();
 
         setPadding();
 
         add(panel_south, BorderLayout.SOUTH);
         add(panel_north, BorderLayout.NORTH);
         add(panel_center, BorderLayout.CENTER);
+        add(panel_East, BorderLayout.EAST);
     }
 
     public void setPadding() {

@@ -109,7 +109,7 @@ public class PanelManager {
         button_openFile.setPreferredSize(new Dimension(300, 35));
         button_openFile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         button_openFile.setBackground(new Color(244, 235, 211));
-        panel_southJPanel.add(Box.createRigidArea(new Dimension(30, 0)));
+        panel_southJPanel.add(Box.createRigidArea(new Dimension(20, 0)));
 
         panel_southJPanel.add(button_openFile);
         panelNorth.add(panel_southJPanel, BorderLayout.SOUTH);
@@ -177,5 +177,34 @@ public class PanelManager {
         panel.add(padding_south, BorderLayout.SOUTH);
         panel.add(padding_east, BorderLayout.EAST);
         panel.add(padding_west, BorderLayout.WEST);
+    }
+
+    public JPanel panel_East() {
+        JPanel panelEast = new JPanel();
+        panelEast.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
+        panelEast.setPreferredSize(new Dimension(300, 500));
+        panelEast.setLayout(new BorderLayout());
+        
+        JPanel panel_eastPadding = new JPanel();
+        panel_eastPadding.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
+        panel_eastPadding.setPreferredSize(new Dimension(500, 500));
+        panel_eastPadding.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+
+        JPanel south_eastPanel = new JPanel();
+        south_eastPanel.setBackground(GasConstants.COLOR_WINDOW);
+        south_eastPanel.setPreferredSize(new Dimension(300, 25));
+        south_eastPanel.setLayout(new BorderLayout());
+
+
+        JPanel north_eastPanel = new JPanel();
+        north_eastPanel.setBackground(GasConstants.COLOR_WINDOW);
+        north_eastPanel.setPreferredSize(new Dimension(300, 25));
+        north_eastPanel.setLayout(new BorderLayout());
+
+        panelEast.add(panel_eastPadding, BorderLayout.EAST);
+        panelEast.add(south_eastPanel, BorderLayout.SOUTH);
+        panelEast.add(north_eastPanel, BorderLayout.NORTH);
+        
+        return panelEast;
     }
 }
