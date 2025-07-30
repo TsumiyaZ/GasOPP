@@ -12,6 +12,7 @@ public class PanelManager {
         JPanel Box_red = new JPanel();
         Box_red.setBackground(Color.red);
         Box_red.setPreferredSize(new Dimension(45, 45));
+        Box_red.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
         JLabel red = new JLabel("RED is Gas 0%");
         red.setFont(new Font("Arial", Font.BOLD, 14));
@@ -23,6 +24,7 @@ public class PanelManager {
         JPanel Box_Yellow = new JPanel();
         Box_Yellow.setBackground(Color.YELLOW);
         Box_Yellow.setPreferredSize(new Dimension(45, 45));
+        Box_Yellow.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
         JLabel Yellow = new JLabel("Yellow is Gas < 50%");
         Yellow.setFont(new Font("Arial", Font.BOLD, 14));
