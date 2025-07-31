@@ -43,7 +43,8 @@ public class PanelManager {
         for (int i = 0; i < button.length; i++) {
             button[i] = new JButton();
             button[i].setOpaque(true);
-            button[i].setBorderPainted(false);
+            /* button[i].setBorderPainted(false); */
+            button[i].setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
             button[i].setBackground(randomColor());
             panel.add(button[i]);
         }
