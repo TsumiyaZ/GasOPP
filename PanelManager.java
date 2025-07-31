@@ -303,6 +303,7 @@ public class PanelManager {
         button_about.setFont(new Font("Arial", Font.BOLD, 14));
         button_about.setFocusPainted(false);
 
+        
         return button_about;
     }
 }

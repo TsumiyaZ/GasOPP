@@ -20,6 +20,7 @@ public class AboutGroup extends JFrame{
 
         P_south();
         
+        
     }    
     
     public void P_south() {
