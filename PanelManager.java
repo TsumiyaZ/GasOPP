@@ -12,7 +12,6 @@ public class PanelManager {
     }
 
     // ================= { Function } =================
-    
     // ========= [ OpenFILE ] =========
     private void openFile() {
         JButton button_openFile = new JButton("OPEN FILE");
@@ -57,7 +56,6 @@ public class PanelManager {
 
 
     // ================= { GUI Frame } =================
-
     // ========= [ PANEL _ SOUTH ] =========
     public JPanel panel_south() {
         JPanel panel = new JPanel(new FlowLayout());
@@ -292,7 +290,6 @@ public class PanelManager {
 
         return button_openFile;
     }
-
 
     public JButton createButtonAbout() {
         JButton button_about = new JButton("About Group");
