@@ -1,13 +1,64 @@
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.*;
 import java.awt.*;
 
 public class PanelManager {
     private DisplayFrame FrameMain;
 
+    // ========= [ ส่ง MainFrame มาที่ไฟล์นี้ ] =========
     public PanelManager(DisplayFrame frame) {
         this.FrameMain = frame;
     }
 
+    // ================= { Function } =================
+    
+    // ========= [ OpenFILE ] =========
+    private void openFile() {
+        JButton button_openFile = new JButton("OPEN FILE");
+        button_openFile.setPreferredSize(new Dimension(300, 35));
+        button_openFile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        button_openFile.setBackground(new Color(196, 217, 255));
+        button_openFile.setFocusPainted(false);
+        
+        JFileChooser file_choose = new JFileChooser();
+
+        FileNameExtensionFilter filter_txt = new FileNameExtensionFilter("Please txt", "txt");
+        
+        // set ให้เปิดได้เเค่ .txt
+        file_choose.setFileFilter(filter_txt);
+
+        int result = file_choose.showOpenDialog(FrameMain);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File select_File = file_choose.getSelectedFile();
+            System.out.println(select_File.getName());
+        } else {
+            System.out.println("No file select");
+        }
+
+    }
+
+    // ========= [ Create ปุ่มเยอะๆตรงกลาง ] =========
+    public void createButton(int count, JPanel panel) {
+        JButton[] button = new JButton[count];
+        for (int i = 0; i < button.length; i++) {
+            button[i] = new JButton();
+            button[i].setBackground(randomColor());
+            panel.add(button[i]);
+        }
+    }
+
+    // ========= [ Random Color ] =========
+    public Color randomColor() {
+        Color[] color = { Color.green, Color.red, Color.YELLOW };
+        int index = (int) (Math.random() * color.length);
+        return color[index];
+    }
+
+
+    // ================= { GUI Frame } =================
+
+    // ========= [ PANEL _ SOUTH ] =========
     public JPanel panel_south() {
         JPanel panel = new JPanel(new FlowLayout());
 
@@ -51,12 +102,7 @@ public class PanelManager {
         panel.add(Box_Green);
         panel.add(green);
 
-        JButton button_about = new JButton("About Group");
-        button_about.setBackground(new Color(196, 217, 255));
-        button_about.setPreferredSize(new Dimension(200, 30));
-        button_about.setBorder(BorderFactory.createLineBorder(Color.black, 2));
-        button_about.setFont(new Font("Arial", Font.BOLD, 14));
-        button_about.setFocusPainted(false);
+        JButton button_about = createButtonAbout();
         
         panel.add(button_about);
 
@@ -73,6 +119,8 @@ public class PanelManager {
         return panel;
     }
 
+
+    // ========= [ PANEL _ NORTH ] =========
     public JPanel panel_north() {
         JPanel panelNorth = new JPanel();
         panelNorth.setBackground(GasConstants.COLOR_WINDOW);
@@ -98,6 +146,8 @@ public class PanelManager {
         return panelNorth;
     }
 
+    
+    // ========= [ PANEL _ CENTER ] =========
     public JPanel panel_center() {
         JPanel panelWest = new JPanel();
         panelWest.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
@@ -120,44 +170,8 @@ public class PanelManager {
         return panel;
     }
 
-    public void createButton(int count, JPanel panel) {
-        JButton[] button = new JButton[count];
-        for (int i = 0; i < button.length; i++) {
-            button[i] = new JButton();
-            button[i].setBackground(randomColor());
-            panel.add(button[i]);
-        }
-    }
 
-    public Color randomColor() {
-        Color[] color = { Color.green, Color.red, Color.YELLOW };
-        int index = (int) (Math.random() * color.length);
-        return color[index];
-    }
-
-    public void setPaddingEvery(JPanel panel) {
-        JPanel padding_south = new JPanel();
-        padding_south.setPreferredSize(new Dimension(0, 25));
-        padding_south.setBackground(GasConstants.COLOR_WINDOW);
-
-        JPanel padding_east = new JPanel();
-        padding_east.setPreferredSize(new Dimension(25, 0));
-        padding_east.setBackground(GasConstants.COLOR_WINDOW);
-
-        JPanel padding_west = new JPanel();
-        padding_west.setPreferredSize(new Dimension(25, 0));
-        padding_west.setBackground(GasConstants.COLOR_WINDOW);
-
-        JPanel padding_north = new JPanel();
-        padding_north.setPreferredSize(new Dimension(0, 25));
-        padding_north.setBackground(GasConstants.COLOR_WINDOW);
-
-        panel.add(padding_north, BorderLayout.NORTH);
-        panel.add(padding_south, BorderLayout.SOUTH);
-        panel.add(padding_east, BorderLayout.EAST);
-        panel.add(padding_west, BorderLayout.WEST);
-    }
-
+    // ========= [ Panel _ East ] =========
     public JPanel panel_East() {
         JPanel panelEast = new JPanel();
         panelEast.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
@@ -194,24 +208,20 @@ public class PanelManager {
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 20, 30));
         buttonPanel.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
 
-        JButton button_cal = new JButton("CALCULATE");
-        button_cal.setPreferredSize(new Dimension(300, 50));
-        button_cal.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        button_cal.setBackground(new Color(196, 217, 255));
-        button_cal.setFocusPainted(false);
-
-        JButton button_clear = new JButton("CLEAR");
-        button_clear.setPreferredSize(new Dimension(120, 25));
-        button_clear.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        button_clear.setBackground(new Color(196, 217, 255));
-        button_clear.setFocusPainted(false);
-
-        JButton button_openFile = new JButton("OPEN FILE");
-        button_openFile.setPreferredSize(new Dimension(300, 35));
-        button_openFile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        button_openFile.setBackground(new Color(196, 217, 255));
-        button_openFile.setFocusPainted(false);
+        // ---------- [ ปุ่ม CALCULATE ] ----------
+        JButton button_cal = createButtonCalculate();
         
+        // ---------- [ ปุ่ม CLEAR ] ----------
+        JButton button_clear = creaButtonClear();
+
+        // ---------- [ ปุ่ม OPENFILE ] ----------
+        JButton button_openFile = creaButtonOpenFile();       
+
+        // ---------- [ addActionListener ให้กับปุ่ม OpenFile ] ----------
+        button_openFile.addActionListener(e -> {
+            openFile();
+        });
+
         buttonPanel.add(button_openFile);
         buttonPanel.add(button_cal);
         buttonPanel.add(button_clear);
@@ -225,5 +235,73 @@ public class PanelManager {
         panelEast.add(north_eastPanel, BorderLayout.NORTH);
         
         return panelEast;
+    }
+
+
+    // ========= [ Padding เพิ่มช่องว่างทาง บน ล่าง ซ้าย ขวา ] =========
+    public void setPaddingEvery(JPanel panel) {
+        JPanel padding_south = new JPanel();
+        padding_south.setPreferredSize(new Dimension(0, 25));
+        padding_south.setBackground(GasConstants.COLOR_WINDOW);
+
+        JPanel padding_east = new JPanel();
+        padding_east.setPreferredSize(new Dimension(25, 0));
+        padding_east.setBackground(GasConstants.COLOR_WINDOW);
+
+        JPanel padding_west = new JPanel();
+        padding_west.setPreferredSize(new Dimension(25, 0));
+        padding_west.setBackground(GasConstants.COLOR_WINDOW);
+
+        JPanel padding_north = new JPanel();
+        padding_north.setPreferredSize(new Dimension(0, 25));
+        padding_north.setBackground(GasConstants.COLOR_WINDOW);
+
+        panel.add(padding_north, BorderLayout.NORTH);
+        panel.add(padding_south, BorderLayout.SOUTH);
+        panel.add(padding_east, BorderLayout.EAST);
+        panel.add(padding_west, BorderLayout.WEST);
+    }
+
+
+    public JButton createButtonCalculate() {
+        JButton button_cal = new JButton("CALCULATE");
+        button_cal.setPreferredSize(new Dimension(300, 50));
+        button_cal.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        button_cal.setBackground(new Color(196, 217, 255));
+        button_cal.setFocusPainted(false);
+
+        return button_cal;
+    }
+
+    public JButton creaButtonClear() {
+        JButton button_clear = new JButton("CLEAR");
+        button_clear.setPreferredSize(new Dimension(120, 25));
+        button_clear.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        button_clear.setBackground(new Color(196, 217, 255));
+        button_clear.setFocusPainted(false);
+
+        return button_clear;
+    }
+
+    public JButton creaButtonOpenFile() {
+        JButton button_openFile = new JButton("OPEN FILE");
+        button_openFile.setPreferredSize(new Dimension(300, 35));
+        button_openFile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        button_openFile.setBackground(new Color(196, 217, 255));
+        button_openFile.setFocusPainted(false);  
+
+        return button_openFile;
+    }
+
+
+    public JButton createButtonAbout() {
+        JButton button_about = new JButton("About Group");
+        button_about.setBackground(new Color(196, 217, 255));
+        button_about.setPreferredSize(new Dimension(200, 30));
+        button_about.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+        button_about.setFont(new Font("Arial", Font.BOLD, 14));
+        button_about.setFocusPainted(false);
+
+        return button_about;
     }
 }
