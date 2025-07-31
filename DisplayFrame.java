@@ -31,6 +31,7 @@ public class DisplayFrame extends JFrame {
 
         add(panel_east, BorderLayout.EAST);
         add(panel_west, BorderLayout.WEST);
+        
     }
 
     public void setFrame() {
