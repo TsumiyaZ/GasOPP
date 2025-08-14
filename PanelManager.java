@@ -37,7 +37,7 @@ public class PanelManager {
 
         int result = file_choose.showOpenDialog(FrameMain);
 
-        System.out.println(result);
+        // APPROVE_OPTION ผู้ใช้กด Open / Save
         if (result == JFileChooser.APPROVE_OPTION) {
             File select_File = file_choose.getSelectedFile();
 
@@ -63,10 +63,11 @@ public class PanelManager {
 
     // ========= [ Get Data in file ] =========
     void getDataInFile(File select_File) {
-    try (BufferedReader read = new BufferedReader(new FileReader(select_File))) {
+    try (
+        BufferedReader read = new BufferedReader(new FileReader(select_File))) {
         ArrayList<String> lines = new ArrayList<>();
 
-        // อ่านข้อมูลบรรทัดทีละบรรทัดเก็บลง List
+        // อ่านข้อมูลบรรทัดทีละบรรทัดเก็บลง ArrayList
         String line;
         while ((line = read.readLine()) != null) {
             line = line.trim();
@@ -80,6 +81,7 @@ public class PanelManager {
             return;
         }
 
+        // หา row
         this.row = lines.size();
 
         // หาความกว้างคอลัมน์สูงสุด
@@ -88,6 +90,7 @@ public class PanelManager {
             String[] values = l.split("\\s+");
             maxCols = Math.max(maxCols, values.length);
         }
+        
         this.column = maxCols;
         baseGas = new int[this.row][this.column];
         this.fluld = Integer.parseInt(this.Fluid_level.getText());
@@ -120,10 +123,12 @@ public class PanelManager {
     void createGridButton() {
         GridPanel = new JPanel(new GridLayout(this.row, this.column, 2, 2));
         panelWest.add(GridPanel, BorderLayout.CENTER);
+
         for (int i = 0; i < baseGas.length; i++) {
             for (int j = 0; j < baseGas[0].length; j++) {
                 JPanel panel = new JPanel(new BorderLayout());
                 double percent = getPercent(baseGas[i][j]);
+                
                 JLabel percent_Text = new JLabel(String.format("%.0f%%", percent), SwingConstants.CENTER);
                 percent_Text.setFont(new Font("Arial", Font.BOLD, 10));
                 percent_Text.setForeground(Color.BLACK); // เปลี่ยนตามพื้นหลังทีหลัง
@@ -167,9 +172,7 @@ public class PanelManager {
 
         // Mouse Hover
         public void mouseEntered(MouseEvent e) {
-            String label = String.format("Percent : %.2f%% | Volume Gas : %.2f", getPercent(base), getVolume(base));
-            panel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
-            monitor.setText(label);
+            setLabelData(panel, base);
         }
 
         // เวลาเมาส์ออกจาก panel นี้
@@ -189,6 +192,12 @@ public class PanelManager {
         }
     }
 
+    void setLabelData(JPanel panel, int base) {
+        String label = String.format("Percent : %.2f%% | Volume Gas : %.2f", getPercent(base), getVolume(base));
+        panel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+        monitor.setText(label);
+    }
+
     private double getPercent(int baseDepth) {
         int topHorizon = baseDepth - 200;
         int fluld = this.fluld;
@@ -202,7 +211,7 @@ public class PanelManager {
         int topHorizon = baseDepth - 200;
         int fluld = this.fluld;
 
-        int thickness = fluld - (baseDepth - 200);
+        int thickness = fluld - topHorizon;
         if (thickness <= 0) {
             return 0; // ไม่มีแก๊ส
         }
