@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import java.awt.*;
 
 public class MenuFrame extends JFrame {
-    private JFrame mainframe;
 
     MenuFrame() {
         setDetailsFrame();

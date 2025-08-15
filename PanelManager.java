@@ -1,12 +1,10 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 public class PanelManager {
     private DisplayFrame FrameMain;
