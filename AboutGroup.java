@@ -44,7 +44,7 @@ public class AboutGroup extends JFrame{
     public JPanel create_Panel_South() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
-        panel.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
+        panel.setBackground(GasConstants.COLOR_WINDOW);
 
         return panel;
     }
@@ -52,7 +52,7 @@ public class AboutGroup extends JFrame{
     public JButton create_Button_Back() {
         JButton backToHome = new JButton("Back");
         backToHome.setPreferredSize(new Dimension(300, 50));
-        backToHome.setBackground(GasConstants.COLOR_WINDOW);
+        backToHome.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
         backToHome.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         backToHome.setFocusPainted(false);
         
@@ -65,6 +65,7 @@ public class AboutGroup extends JFrame{
         JLabel about_topic = new JLabel("About Group");
 
         panel.setLayout(new FlowLayout());
+        panel.setBackground(GasConstants.COLOR_WINDOW);
         panel.setBorder(new LineBorder(Color.BLACK, 2));
 
         about_topic.setFont(new Font(null, Font.BOLD, 36));
@@ -125,19 +126,16 @@ public class AboutGroup extends JFrame{
         return add_name;
     }
 
-    public JLabel[]  Add_Label()
-    {
-        StringBuilder Stb = new StringBuilder();
-        JLabel[] add_label = new JLabel[3];
-        for (int i = 0; i < add_label.length; i++)
-        {
-            Stb.append("<html>NAME : "+GasConstants.GAS_NAME_TEXT[i]+"<br>ID : "+GasConstants.GAS_ID_TEXT[i]+"</html>");
-            String data = Stb.toString();
-            add_label[i] = new JLabel(data);
-            add_label[i].setFont(new Font(null, Font.BOLD, 24));
-        }
-        return add_label;
+    public JLabel[] Add_Label() {
+    JLabel[] add_label = new JLabel[3]; 
+    for (int i = 0; i < add_label.length; i++) {
+        String data = "<html>NAME : " + GasConstants.GAS_NAME_TEXT[i] + "<br>ID : " + GasConstants.GAS_ID_TEXT[i] + "</html>";
+        add_label[i] = new JLabel(data);
+        add_label[i].setFont(new Font(null, Font.BOLD, 24));
     }
+    return add_label;
+}
+
 
     public JLabel picture()
     {
