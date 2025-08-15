@@ -7,41 +7,55 @@ import java.awt.*;
 import java.awt.event.MouseListener;
 
 public class PanelManager {
+    // เก็บ reference ของ Frame หลัก
     private DisplayFrame FrameMain;
+
+    // เก็บข้อมูลฐานแก๊ส (จากไฟล์)
     private int[][] baseGas;
+
+    // ค่าระดับของ fluid contact (ค่า default มาจาก GasConstants)
     private int fluld = GasConstants.FLULD_CONTACT;
+
+    // panel ฝั่งซ้าย
     private JPanel panelWest;
+
+    // ป้าย label แสดงข้อมูลแก๊สเวลาชี้เมาส์
     private JLabel monitor;
+
+    // ช่องกรอกระดับ fluid
     private JTextField Fluid_level;
+
+    // จำนวนแถวและคอลัมน์ของข้อมูล
     private int row = 0;
     private int column = 0;
+
+    // panel สำหรับแสดง grid
     private JPanel GridPanel;
 
-    // ========= [ ส่ง MainFrame มาที่ไฟล์นี้ ] =========
+    // ========= [ Constructor: รับ Frame หลัก ] =========
     public PanelManager(DisplayFrame frame) {
         this.FrameMain = frame;
     }
 
     // ================= { Function } =================
-    // ========= [ OpenFILE ] =========
+    // ========= [ เปิดไฟล์ ] =========
     private void openFile() {
         JFileChooser file_choose = new JFileChooser();
-        file_choose.setCurrentDirectory(new File("DataGas"));
+        file_choose.setCurrentDirectory(new File("DataGas")); // ตั้งโฟลเดอร์เริ่มต้น
 
-        FileNameExtensionFilter filter_txt = new FileNameExtensionFilter("Please txt", "txt");
-
-        // set ให้เปิดได้เเค่ .txt
+        FileNameExtensionFilter filter_txt = new FileNameExtensionFilter("Please txt", "txt"); // ให้เลือกได้เฉพาะไฟล์ .txt
         file_choose.setFileFilter(filter_txt);
 
         int result = file_choose.showOpenDialog(FrameMain);
 
-        // APPROVE_OPTION ผู้ใช้กด Open / Save
+        // ถ้าผู้ใช้เลือกไฟล์
         if (result == JFileChooser.APPROVE_OPTION) {
             File select_File = file_choose.getSelectedFile();
 
-            // เอาข้อมูลตัวเลขมาจากไฟล์
+            // อ่านข้อมูลจากไฟล์มาใส่ baseGas
             getDataInFile(select_File);
 
+            // สร้างปุ่ม grid จากข้อมูลในไฟล์
             createGridButton();
 
         } else {
@@ -49,7 +63,7 @@ public class PanelManager {
         }
     }
 
-    // ========= [ Check Data in file ] =========
+    // ========= [ แสดงข้อมูลใน baseGas เพื่อ debug ] =========
     void checkDataInFile() {
         for (int i = 0; i < baseGas.length; i++) {
             for (int j = 0; j < baseGas[i].length; j++) {
@@ -59,65 +73,68 @@ public class PanelManager {
         }
     }
 
-    // ========= [ Get Data in file ] =========
+    // ========= [ อ่านข้อมูลจากไฟล์ใส่ baseGas ] =========
     void getDataInFile(File select_File) {
-    try (
-        BufferedReader read = new BufferedReader(new FileReader(select_File))) {
-        ArrayList<String> lines = new ArrayList<>();
+        try (BufferedReader read = new BufferedReader(new FileReader(select_File))) {
+            ArrayList<String> lines = new ArrayList<>();
 
-        // อ่านข้อมูลบรรทัดทีละบรรทัดเก็บลง ArrayList
-        String line;
-        while ((line = read.readLine()) != null) {
-            line = line.trim();
-            if (!line.isEmpty()) {
-                lines.add(line);
-            }
-        }
-
-        if (lines.isEmpty()) {
-            System.out.println("File is empty");
-            return;
-        }
-
-        // หา row
-        this.row = lines.size();
-
-        // หาความกว้างคอลัมน์สูงสุด
-        int maxCols = 0;
-        for (String l : lines) {
-            String[] values = l.split("\\s+");
-            maxCols = Math.max(maxCols, values.length);
-        }
-        
-        this.column = maxCols;
-        baseGas = new int[this.row][this.column];
-        this.fluld = Integer.parseInt(this.Fluid_level.getText());
-
-        // อ่านข้อมูลใส่ baseGas และจัดการกรณีข้อมูลผิดพลาด
-        for (int r = 0; r < this.row; r++) {
-            String[] values = lines.get(r).split("\\s+");
-            for (int c = 0; c < maxCols; c++) {
-                if (c < values.length) {
-                    try {
-                        baseGas[r][c] = Integer.parseInt(values[c]);
-                    } catch (NumberFormatException e) {
-                        baseGas[r][c] = 0;
-                        System.out.println("Invalid number at [" + r + "," + c + "], set to 0");
-                    }
-                } else {
-                    baseGas[r][c] = 0;  // กรณีข้อมูลคอลัมน์น้อยกว่าความกว้าง maxCols เติม 0
+            // อ่านข้อมูลทีละบรรทัด เก็บใน ArrayList
+            String line;
+            while ((line = read.readLine()) != null) {
+                line = line.trim();
+                if (!line.isEmpty()) {
+                    lines.add(line);
                 }
             }
+
+            // ถ้าไฟล์ว่าง
+            if (lines.isEmpty()) {
+                System.out.println("File is empty");
+                return;
+            }
+
+            // จำนวนแถว
+            this.row = lines.size();
+
+            // หา column สูงสุด
+            int maxCols = 0;
+            for (String l : lines) {
+                String[] values = l.split("\\s+");
+                maxCols = Math.max(maxCols, values.length);
+            }
+            this.column = maxCols;
+
+            // สร้าง array baseGas
+            baseGas = new int[this.row][this.column];
+
+            // อ่านค่าจากช่อง Fluid_level
+            this.fluld = Integer.parseInt(this.Fluid_level.getText());
+
+            // ใส่ค่าจากไฟล์ลงใน baseGas
+            for (int r = 0; r < this.row; r++) {
+                String[] values = lines.get(r).split("\\s+");
+                for (int c = 0; c < maxCols; c++) {
+                    if (c < values.length) {
+                        try {
+                            baseGas[r][c] = Integer.parseInt(values[c]);
+                        } catch (NumberFormatException e) {
+                            baseGas[r][c] = 0; // ถ้าไม่ใช่ตัวเลข ใส่ 0
+                            System.out.println("Invalid number at [" + r + "," + c + "], set to 0");
+                        }
+                    } else {
+                        baseGas[r][c] = 0; // ถ้าจำนวนน้อยกว่าความกว้างสูงสุด ให้เติม 0
+                    }
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("IO error: " + e.getMessage());
         }
-
-    } catch (FileNotFoundException e) {
-        System.out.println("File not found");
-    } catch (IOException e) {
-        System.out.println("IO error: " + e.getMessage());
     }
-}
 
-
+    // ========= [ สร้าง Grid แสดงปุ่มแต่ละ cell ] =========
     void createGridButton() {
         GridPanel = new JPanel(new GridLayout(this.row, this.column, 2, 2));
         panelWest.add(GridPanel, BorderLayout.CENTER);
@@ -126,12 +143,14 @@ public class PanelManager {
             for (int j = 0; j < baseGas[0].length; j++) {
                 JPanel panel = new JPanel(new BorderLayout());
                 double percent = getPercent(baseGas[i][j]);
-                
+
+                // แสดงเปอร์เซ็นต์ตรงกลางปุ่ม
                 JLabel percent_Text = new JLabel(String.format("%.0f%%", percent), SwingConstants.CENTER);
                 percent_Text.setFont(new Font("Arial", Font.BOLD, 10));
-                percent_Text.setForeground(Color.BLACK); // เปลี่ยนตามพื้นหลังทีหลัง
+                percent_Text.setForeground(Color.BLACK);
                 panel.setPreferredSize(new Dimension(40, 40));
 
+                // กำหนดสีตามเปอร์เซ็นต์
                 if (percent <= 0) {
                     panel.setBackground(Color.red);
                 } else if (percent < 50) {
@@ -140,6 +159,7 @@ public class PanelManager {
                     panel.setBackground(Color.green);
                 }
 
+                // เพิ่ม MouseListener เพื่อให้แสดงข้อมูลเมื่อ hover
                 panel.addMouseListener(new MouseFunction(baseGas[i][j], panel));
 
                 panel.add(percent_Text);
@@ -151,6 +171,7 @@ public class PanelManager {
         GridPanel.repaint();
     }
 
+    // ลบข้อมูลใน GridPanel
     private void clearGridPanel() {
         if (GridPanel != null) {
             GridPanel.removeAll();
@@ -159,6 +180,7 @@ public class PanelManager {
         }
     }
 
+    // ========= [ คลาสสำหรับจัดการ Mouse Event ในแต่ละ cell ] =========
     private class MouseFunction implements MouseListener {
         private int base;
         private JPanel panel;
@@ -168,34 +190,30 @@ public class PanelManager {
             this.panel = panel;
         }
 
-        // Mouse Hover
+        // เมื่อเมาส์เข้า
         public void mouseEntered(MouseEvent e) {
             setLabelData(panel, base);
         }
 
-        // เวลาเมาส์ออกจาก panel นี้
+        // เมื่อเมาส์ออก
         public void mouseExited(MouseEvent e) {
             monitor.setText("");
             panel.setBorder(BorderFactory.createLineBorder(Color.white));
         }
 
-        public void mouseClicked(MouseEvent e) {
-        }
-
-        public void mousePressed(MouseEvent e) {
-        }
-
-        public void mouseReleased(MouseEvent e) {
-
-        }
+        public void mouseClicked(MouseEvent e) {}
+        public void mousePressed(MouseEvent e) {}
+        public void mouseReleased(MouseEvent e) {}
     }
 
+    // ตั้งค่าข้อมูลลงใน monitor
     void setLabelData(JPanel panel, int base) {
         String label = String.format("Percent : %.2f%% | Volume Gas : %.2f", getPercent(base), getVolume(base));
         panel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         monitor.setText(label);
     }
 
+    // คำนวณเปอร์เซ็นต์แก๊ส
     private double getPercent(int baseDepth) {
         int topHorizon = baseDepth - 200;
         int fluld = this.fluld;
@@ -205,6 +223,7 @@ public class PanelManager {
         return gas / total * 100;
     }
 
+    // คำนวณปริมาตรแก๊ส
     private double getVolume(int baseDepth) {
         int topHorizon = baseDepth - 200;
         int fluld = this.fluld;
@@ -216,94 +235,86 @@ public class PanelManager {
         return GasConstants.GAS_BUTTON_WIDTH * GasConstants.GAS_BUTTON_LENGTH * thickness;
     }
 
-    // ================= { GUI Frame } =================
-    // ========= [ PANEL _ SOUTH ] =========
+    // ================= { GUI Panel ส่วนต่างๆ } =================
+
+    // ========= [ PANEL SOUTH: Legend + ปุ่ม About ] =========
     public JPanel panel_south() {
         JPanel panel = new JPanel(new FlowLayout());
 
         panel.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
         panel.setPreferredSize(new Dimension(0, 60));
 
-        // สร้าง Box_red
+        // กล่องสีแดง
         JPanel Box_red = new JPanel();
         Box_red.setBackground(Color.red);
         Box_red.setPreferredSize(new Dimension(45, 45));
         Box_red.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-
         JLabel red = new JLabel("RED is Gas 0%");
         red.setFont(new Font("Arial", Font.BOLD, 14));
-
         panel.add(Box_red);
         panel.add(red);
 
-        // สร้าง Box_Yellow
+        // กล่องสีเหลือง
         JPanel Box_Yellow = new JPanel();
         Box_Yellow.setBackground(Color.YELLOW);
         Box_Yellow.setPreferredSize(new Dimension(45, 45));
         Box_Yellow.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-
         JLabel Yellow = new JLabel("Yellow is Gas < 50%");
         Yellow.setFont(new Font("Arial", Font.BOLD, 14));
-
         panel.add(Box_Yellow);
         panel.add(Yellow);
 
-        // สร้าง Box_Green
+        // กล่องสีเขียว
         JPanel Box_Green = new JPanel();
         Box_Green.setBackground(Color.green);
         Box_Green.setPreferredSize(new Dimension(45, 45));
         Box_Green.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-
         JLabel green = new JLabel("Green is Gas > 50%");
         green.setFont(new Font("Arial", Font.BOLD, 14));
-
         panel.add(Box_Green);
         panel.add(green);
 
+        // ปุ่ม About
         JButton button_about = createButtonAbout("About Group", 200, 30);
-
         panel.add(button_about);
 
-        // เมือกดปุ่ม about จะขึ้น frame ใหม่
+        // ปุ่ม EXIT
+        JButton button_exit = createButtonExit("EXIT", 200, 30);
+        panel.add(button_exit);
+
+        // เมื่อกดปุ่ม about
         button_about.addActionListener(e -> {
             AboutGroup about = new AboutGroup(FrameMain);
-            // เปิดหน้า about
             about.setVisible(true);
-
-            // ปิดหน้าหลักชั่วคราว
             FrameMain.setVisible(false);
         });
+
+        // เมื่อกดปุ่ม EXIT 
+        button_exit.addActionListener(e -> System.exit(0));
 
         return panel;
     }
 
-    // ========= [ PANEL _ NORTH ] =========
+    // ========= [ PANEL NORTH: พื้นที่ด้านบน ] =========
     public JPanel panel_north() {
         JPanel panelNorth = new JPanel();
         panelNorth.setBackground(GasConstants.COLOR_WINDOW);
         panelNorth.setLayout(new BorderLayout());
 
-        ////////////////////////////////
-
-        // SOUTH : -- ปุ่ม OPEN FILE ด้านล่าง
         JPanel panel_southJPanel = new JPanel(new FlowLayout());
         panel_southJPanel.setBackground(GasConstants.COLOR_WINDOW);
         panel_southJPanel.setPreferredSize(new Dimension(0, 40));
-
         panelNorth.add(panel_southJPanel, BorderLayout.SOUTH);
 
-        // NORTH : -- Padding ด้านบน --
         JPanel panel_northPadding = new JPanel();
-
         panel_northPadding.setBackground(GasConstants.COLOR_WINDOW);
         panel_northPadding.setPreferredSize(new Dimension(0, 10));
-
         panelNorth.add(panel_northPadding, BorderLayout.NORTH);
 
         return panelNorth;
     }
 
-    // ========= [ PANEL _ CENTER ] =========
+    // ========= [ PANEL CENTER: พื้นที่ตรงกลางฝั่งซ้าย ] =========
     public JPanel panel_center() {
         panelWest = new JPanel(new BorderLayout());
         panelWest.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
@@ -311,22 +322,19 @@ public class PanelManager {
 
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(GasConstants.COLOR_WINDOW);
-
-        // createButton(200, panel_center);
         setPaddingEvery(panel);
-
         panel.add(panelWest, BorderLayout.CENTER);
 
         return panel;
     }
 
-    // ========= [ Panel _ East ] =========
+    // ========= [ PANEL EAST: ฝั่งขวา มีช่องกรอกข้อมูล ปุ่ม และ Monitor ] =========
     public JPanel panel_East() {
         JPanel panelEast = new JPanel(new BorderLayout());
         panelEast.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
         panelEast.setPreferredSize(new Dimension(400, 500));
 
-        // Padding ด้านขวา / บน / ล่าง
+        // padding
         JPanel panel_eastPadding = new JPanel();
         panel_eastPadding.setBackground(GasConstants.COLOR_WINDOW);
         panel_eastPadding.setPreferredSize(new Dimension(25, 500));
@@ -339,39 +347,32 @@ public class PanelManager {
         north_eastPanel.setBackground(GasConstants.COLOR_WINDOW);
         north_eastPanel.setPreferredSize(new Dimension(300, 25));
 
-        // Panel กลาง จัดแนวตั้ง
+        // panel กลาง (ฝั่งขวา)
         JPanel panel_centerAll = new JPanel();
         panel_centerAll.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
         panel_centerAll.setLayout(new BoxLayout(panel_centerAll, BoxLayout.Y_AXIS));
-        panel_centerAll.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // ช่องว่างรอบๆ
+        panel_centerAll.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Label หัวข้อ
         JLabel label = new JLabel("Fluid Contact Depth :");
         label.setFont(new Font("Arial", Font.BOLD, 17));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel_centerAll.add(label);
+        panel_centerAll.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        panel_centerAll.add(Box.createRigidArea(new Dimension(0, 10))); // เว้นบรรทัด
-
-        // JTextField fluidLevel
         Fluid_level = new JTextField(String.valueOf(GasConstants.FLULD_CONTACT));
         Fluid_level.setMaximumSize(new Dimension(300, 30));
         Fluid_level.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel_centerAll.add(Fluid_level);
-
         panel_centerAll.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Monitor เล็กลง
         monitor = new JLabel();
         monitor.setPreferredSize(new Dimension(300, 80));
         monitor.setMaximumSize(new Dimension(300, 80));
         monitor.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         monitor.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel_centerAll.add(monitor);
-
         panel_centerAll.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Panel ปุ่ม ใช้ GridLayout
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 10, 10));
         buttonPanel.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
         buttonPanel.setMaximumSize(new Dimension(320, 180));
@@ -394,7 +395,6 @@ public class PanelManager {
         buttonPanel.add(button_cal);
         buttonPanel.add(button_clear);
 
-        buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel_centerAll.add(buttonPanel);
 
         panelEast.add(panel_centerAll, BorderLayout.CENTER);
@@ -405,6 +405,7 @@ public class PanelManager {
         return panelEast;
     }
 
+    // ล้างข้อมูลทั้งหมด
     private void clearButton() {
         baseGas = new int[0][0];
         this.row = 0;
@@ -412,6 +413,7 @@ public class PanelManager {
         clearGridPanel();
     }
 
+    // อัพเดตข้อมูลตามค่าที่ใส่ใน Fluid_level
     private void updateData() {
         if (this.row > 0) {
             if (Fluid_level.getText().matches("[0-9]+")) {
@@ -427,7 +429,7 @@ public class PanelManager {
         }
     }
 
-    // ========= [ Padding เพิ่มช่องว่างทาง บน ล่าง ซ้าย ขวา ] =========
+    // ========= [ Padding รอบ panel ] =========
     public void setPaddingEvery(JPanel panel) {
         JPanel padding_south = new JPanel();
         padding_south.setPreferredSize(new Dimension(0, 25));
@@ -451,14 +453,13 @@ public class PanelManager {
         panel.add(padding_west, BorderLayout.WEST);
     }
 
-    // ========= [ Create Button ] =========
+    // ========= [ เมธอดสร้างปุ่มต่างๆ ] =========
     public JButton createButtonCalculate(String text, int width, int height) {
         JButton button_cal = new JButton(text);
         button_cal.setPreferredSize(new Dimension(width, height));
         button_cal.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         button_cal.setBackground(new Color(196, 217, 255));
         button_cal.setFocusPainted(false);
-
         return button_cal;
     }
 
@@ -468,7 +469,6 @@ public class PanelManager {
         button_clear.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         button_clear.setBackground(new Color(196, 217, 255));
         button_clear.setFocusPainted(false);
-
         return button_clear;
     }
 
@@ -478,7 +478,6 @@ public class PanelManager {
         button_openFile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         button_openFile.setBackground(new Color(196, 217, 255));
         button_openFile.setFocusPainted(false);
-
         return button_openFile;
     }
 
@@ -489,7 +488,16 @@ public class PanelManager {
         button_about.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         button_about.setFont(new Font("Arial", Font.BOLD, 14));
         button_about.setFocusPainted(false);
+        return button_about;
+    }
 
+    public JButton createButtonExit(String text, int width, int height) {
+        JButton button_about = new JButton(text);
+        button_about.setBackground(Color.red);
+        button_about.setPreferredSize(new Dimension(width, height));
+        button_about.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+        button_about.setFont(new Font("Arial", Font.BOLD, 14));
+        button_about.setFocusPainted(false);
         return button_about;
     }
 }
