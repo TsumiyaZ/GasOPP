@@ -542,12 +542,12 @@ public class PanelManager {
     }
 
     public JButton createButtonExit(String text, int width, int height) {
-        JButton button_about = new JButton(text);
-        button_about.setBackground(Color.red);
-        button_about.setPreferredSize(new Dimension(width, height));
-        button_about.setBorder(BorderFactory.createLineBorder(Color.black, 2));
-        button_about.setFont(new Font("Arial", Font.BOLD, 14));
-        button_about.setFocusPainted(false);
-        return button_about;
+        JButton button_exit = new JButton(text);
+        button_exit.setBackground(Color.red);
+        button_exit.setPreferredSize(new Dimension(width, height));
+        button_exit.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+        button_exit.setFont(new Font("Arial", Font.BOLD, 14));
+        button_exit.setFocusPainted(false);
+        return button_exit;
     }
 }

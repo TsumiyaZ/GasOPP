@@ -20,15 +20,6 @@ public class DisplayFrame extends JFrame {
         add(panel_center, BorderLayout.CENTER);
         add(panel_East, BorderLayout.EAST);
     }
-    
-    // Method สำหรับ refresh GridPanel เมื่อกลับมาจาก About
-    public void refreshDisplay() {
-        if (panelManager != null) {
-            panelManager.refreshGrid();
-        }
-        repaint();
-        revalidate();
-    }
 
     public void setPadding() {
         // set ช่องว่างซ้ายขวาของ Frame
