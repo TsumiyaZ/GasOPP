@@ -153,7 +153,7 @@ public class PanelManager {
                 // กำหนดสีตามเปอร์เซ็นต์
                 if (percent <= 0) {
                     panel.setBackground(Color.red);
-                } else if (percent < 50) {
+                } else if (percent <= 50) {
                     panel.setBackground(Color.yellow);
                 } else {
                     panel.setBackground(Color.green);

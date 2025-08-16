@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class AboutGroup extends JFrame{
+public class AboutGroup extends JFrame {
 
     private DisplayFrame MainFrame;
 
@@ -17,7 +17,7 @@ public class AboutGroup extends JFrame{
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         setUndecorated(true);
-        
+
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
@@ -28,25 +28,23 @@ public class AboutGroup extends JFrame{
 
         P_south();
         About_Topic();
-        Mid_Panel();
+        midPanel();
 
-        
-        
-    }    
-    
+    }
+
     public void P_south() {
         JButton backToHome = create_Button_Back();
 
         JPanel south = create_Panel_South();
-        
+
         backToHome.addActionListener(e -> {
             // ปิดหน้านี้ออกไปเลย
             this.dispose();
-            
+
             // เปิดหน้าหลักก
             MainFrame.setVisible(true);
         });
-        
+
         south.add(backToHome);
         add(south, BorderLayout.SOUTH);
     }
@@ -65,12 +63,11 @@ public class AboutGroup extends JFrame{
         backToHome.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
         backToHome.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         backToHome.setFocusPainted(false);
-        
+
         return backToHome;
     }
 
-    public void About_Topic ()
-    {
+    public void About_Topic() {
         JPanel panel = create_Panel_Topic();
         JLabel about_topic = new JLabel("About Group");
 
@@ -84,79 +81,76 @@ public class AboutGroup extends JFrame{
         add(panel, BorderLayout.NORTH);
     }
 
-    public  JPanel create_Panel_Topic ()
-    {
+    public JPanel create_Panel_Topic() {
         JPanel about_panel = new JPanel();
         return about_panel;
     }
 
-    public void Mid_Panel ()
-    {
-        JPanel panel = create_Panel_Topic();
-        JLabel[] add_label = Add_Label();
-        JPanel[] add_name = Add_Name(add_label);
-        JPanel[] add_picture = Add_Picture();
+    public void midPanel() {
+        JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(new LineBorder(Color.BLACK, 2));
-        for (int i=0; i< Add_Picture().length;i++)
-        {
-            JPanel picture_panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            picture_panel.add(add_picture[i]);
-            picture_panel.add(add_name[i]);
-            panel.add(picture_panel);
-            add_picture[i].add(picture());
+
+        JLabel[] labels = createLabels();
+        JPanel[] namePanels = createNamePanels(labels);
+        JPanel[] picturePanels = createPicturePanels();
+
+        for (int i = 0; i < picturePanels.length; i++) {
+            JPanel row = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            row.add(picturePanels[i]);
+            row.add(namePanels[i]);
+
+            // ใส่รูปภาพในช่อง picture
+            picturePanels[i].add(createPictureLabel(GasConstants.PICTURE_ABOUT[i]));
+
+            panel.add(row);
         }
+
         add(panel, BorderLayout.CENTER);
     }
 
-    public JPanel[] Add_Picture ()
-    {
-        JPanel[] a_picture = new JPanel[3];
-        for (int i = 0; i < a_picture.length; i++)
-        {
-            a_picture[i] = new JPanel();
-            a_picture[i].setPreferredSize(new Dimension(150, 200));
-            a_picture[i].setBorder(new LineBorder(Color.BLACK, 2));
+    public JLabel[] createLabels() {
+        JLabel[] labels = new JLabel[3];
+        for (int i = 0; i < labels.length; i++) {
+            String data = "<html>NAME : " + GasConstants.GAS_NAME_TEXT[i]
+                    + "<br>ID : " + GasConstants.GAS_ID_TEXT[i] + "</html>";
+            labels[i] = new JLabel(data);
+            labels[i].setFont(new Font(null, Font.BOLD, 24));
         }
-        return a_picture;
+        return labels;
     }
 
+    public JPanel[] createNamePanels(JLabel[] labels) {
+    JPanel[] panels = new JPanel[labels.length];
+    for (int i = 0; i < panels.length; i++) {
+        panels[i] = new JPanel();
+        panels[i].setLayout(new BoxLayout(panels[i], BoxLayout.Y_AXIS));
+        panels[i].setPreferredSize(new Dimension(500, 200));
+        panels[i].setBorder(new LineBorder(Color.BLACK, 2));
 
-    public JPanel[] Add_Name (JLabel[] Add_Label)
-    {
-        JPanel[] add_name = new JPanel[3];
-        for (int i = 0; i < add_name.length; i++)
-        {
-            add_name[i] = new JPanel();
-            add_name[i].setPreferredSize(new Dimension(500, 200));
-            add_name[i].setLayout(new FlowLayout(FlowLayout.CENTER,0,60));
-            add_name[i].setBorder(new LineBorder(Color.BLACK, 2));
-            add_name[i].add(Add_Label[i]);
-        }
-        return add_name;
+        labels[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+        panels[i].add(Box.createVerticalGlue());  // ดันให้กึ่งกลาง
+        panels[i].add(labels[i]);
+        panels[i].add(Box.createVerticalGlue());
     }
-
-    public JLabel[] Add_Label() {
-    JLabel[] add_label = new JLabel[3]; 
-    for (int i = 0; i < add_label.length; i++) {
-        String data = "<html>NAME : " + GasConstants.GAS_NAME_TEXT[i] + "<br>ID : " + GasConstants.GAS_ID_TEXT[i] + "</html>";
-        add_label[i] = new JLabel(data);
-        add_label[i].setFont(new Font(null, Font.BOLD, 24));
-    }
-    return add_label;
+    return panels;
 }
 
 
-    public JLabel picture()
-    {
-        ImageIcon picture_image = new ImageIcon("PICTURE1.jpg");
-        Image image = picture_image.getImage().getScaledInstance(130, 185, Image.SCALE_SMOOTH);
-        ImageIcon Ic_Image = new ImageIcon(image);
-        JLabel picture = new JLabel(Ic_Image);
-        return picture;
+    public JPanel[] createPicturePanels() {
+        JPanel[] panels = new JPanel[3];
+        for (int i = 0; i < panels.length; i++) {
+            panels[i] = new JPanel();
+            panels[i].setPreferredSize(new Dimension(150, 200));
+            panels[i].setBorder(new LineBorder(Color.BLACK, 2));
+        }
+        return panels;
     }
 
+    public JLabel createPictureLabel(String path) {
+        ImageIcon icon = new ImageIcon(path);
+        Image scaled = icon.getImage().getScaledInstance(130, 185, Image.SCALE_SMOOTH);
+        return new JLabel(new ImageIcon(scaled));
+    }
 
-
-    
 }

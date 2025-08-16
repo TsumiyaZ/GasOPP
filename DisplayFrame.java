@@ -43,7 +43,7 @@ public class DisplayFrame extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         setResizable(false);
-        setUndecorated(true);
+        /* setUndecorated(true); */
 
         getContentPane().setBackground(GasConstants.COLOR_WINDOW);
 
