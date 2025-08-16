@@ -36,6 +36,7 @@ public class AboutDialog extends JDialog {
         JButton closeButton = new JButton("Close");
         closeButton.setPreferredSize(new Dimension(300, 50));
         closeButton.setBackground(GasConstants.COLOR_WINDOW_SOUTH);
+        closeButton.setOpaque(true);
         closeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         closeButton.setFocusPainted(false);
         return closeButton;

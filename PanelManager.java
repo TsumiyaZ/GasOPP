@@ -508,7 +508,8 @@ public class PanelManager {
         JButton button_cal = new JButton(text);
         button_cal.setPreferredSize(new Dimension(width, height));
         button_cal.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        button_cal.setBackground(new Color(196, 217, 255));
+        button_cal.setBackground(GasConstants.COLOR_WINDOW);
+        button_cal.setOpaque(true);
         button_cal.setFocusPainted(false);
         return button_cal;
     }
@@ -517,7 +518,8 @@ public class PanelManager {
         JButton button_clear = new JButton(text);
         button_clear.setPreferredSize(new Dimension(width, height));
         button_clear.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        button_clear.setBackground(new Color(196, 217, 255));
+        button_clear.setBackground(GasConstants.COLOR_WINDOW);
+        button_clear.setOpaque(true);
         button_clear.setFocusPainted(false);
         return button_clear;
     }
@@ -526,14 +528,16 @@ public class PanelManager {
         JButton button_openFile = new JButton(text);
         button_openFile.setPreferredSize(new Dimension(width, height));
         button_openFile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        button_openFile.setBackground(new Color(196, 217, 255));
+        button_openFile.setBackground(GasConstants.COLOR_WINDOW);
+        button_openFile.setOpaque(true);
         button_openFile.setFocusPainted(false);
         return button_openFile;
     }
 
     public JButton createButtonAbout(String text, int width, int height) {
         JButton button_about = new JButton(text);
-        button_about.setBackground(new Color(196, 217, 255));
+        button_about.setBackground(GasConstants.COLOR_WINDOW);
+        button_about.setOpaque(true);
         button_about.setPreferredSize(new Dimension(width, height));
         button_about.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         button_about.setFont(new Font("Arial", Font.BOLD, 14));
@@ -542,12 +546,13 @@ public class PanelManager {
     }
 
     public JButton createButtonExit(String text, int width, int height) {
-        JButton button_about = new JButton(text);
-        button_about.setBackground(Color.red);
-        button_about.setPreferredSize(new Dimension(width, height));
-        button_about.setBorder(BorderFactory.createLineBorder(Color.black, 2));
-        button_about.setFont(new Font("Arial", Font.BOLD, 14));
-        button_about.setFocusPainted(false);
-        return button_about;
+        JButton button_exit = new JButton(text);
+        button_exit.setBackground(Color.red);
+        button_exit.setOpaque(true);
+        button_exit.setPreferredSize(new Dimension(width, height));
+        button_exit.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+        button_exit.setFont(new Font("Arial", Font.BOLD, 14));
+        button_exit.setFocusPainted(false);
+        return button_exit;
     }
 }
