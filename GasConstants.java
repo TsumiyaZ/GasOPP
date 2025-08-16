@@ -10,5 +10,5 @@ public class GasConstants {
     public static final int GAS_BUTTON_LENGTH = 150;
     public static final String[] GAS_NAME_TEXT = {"WATCHARAKORN CHATSRI","SUDARAT AINSI","NISARA THIABMUNG"};
     public static final String[] GAS_ID_TEXT = {"67011212057","67011212144","67011212188"};
-    public static final String[] PICTURE_ABOUT = {"Picture/PICTURE1.jpg", "Picture/PictureMenu.jpg", "Picture/milk.jpg"};
+    public static final String[] PICTURE_ABOUT = {"Picture/PICTURE1.jpg", "Picture/SUDARAT.jpg", "Picture/milk.jpg"};
 }
