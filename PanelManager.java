@@ -412,8 +412,8 @@ public class PanelManager {
         button_clear.addActionListener(e -> clearButton());
         button_cal.addActionListener(e -> updateData());
 
-        buttonPanel.add(button_openFile);
         buttonPanel.add(button_cal);
+        buttonPanel.add(button_openFile);
         buttonPanel.add(button_clear);
 
         panel_centerAll.add(buttonPanel);
