@@ -114,7 +114,7 @@ public class PanelManager {
             // ใส่ค่าจากไฟล์ลงใน baseGas
             for (int row = 0; row < this.row; row++) {
                 String[] values = lines.get(row).split("\\s+");
-                for (int column = 0; column < maxCols; column++) {
+                for (int column = 0; column < MAX_Cols; column++) {
                     if (column < values.length) {
                         try {
 
