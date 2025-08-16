@@ -250,8 +250,7 @@ public class PanelManager {
 
     // ตั้งค่าข้อมูลลงใน monitor
     void setLabelData(JPanel panel, double base) {
-        String label = String.format("<html>Percent | %.2f%%<br>Volume | %.2f<html>", getPercent(base),
-                getVolume(base));
+        String label = String.format("<html>Percent | %.2f%%<br>Volume | %.2f<html>", getPercent(base), getVolume(base));
         panel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         monitor.setText(label);
     }
