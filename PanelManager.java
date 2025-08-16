@@ -43,7 +43,7 @@ public class PanelManager {
         JFileChooser file_choose = new JFileChooser();
         file_choose.setCurrentDirectory(new File("DataGas")); // ตั้งโฟลเดอร์เริ่มต้น
 
-        FileNameExtensionFilter filter_txt = new FileNameExtensionFilter("Please txt", "txt"); // ให้เลือกได้เฉพาะไฟล์ .txt
+        FileNameExtensionFilter filter_txt = new FileNameExtensionFilter("Please txt", "txt"); // ให้เลือกได้เฉพาะไฟล์.txt
         file_choose.setFileFilter(filter_txt);
 
         int result = file_choose.showOpenDialog(FrameMain);
@@ -57,7 +57,7 @@ public class PanelManager {
 
             checkDataInFile();
             // สร้างปุ่ม grid จากข้อมูลในไฟล์
-            createGridButton();     
+            createGridButton();
 
         } else {
             System.out.println("No file select");
@@ -99,8 +99,8 @@ public class PanelManager {
 
             // หา column สูงสุด
             int maxCols = 0;
-            for (String l : lines) {
-                String[] values = l.split("\\s+");
+            for (String liness : lines) {
+                String[] values = liness.split("\\s+");
                 maxCols = Math.max(maxCols, values.length);
             }
             this.column = maxCols;
@@ -112,19 +112,21 @@ public class PanelManager {
             this.fluld = Integer.parseInt(this.Fluid_level.getText());
 
             // ใส่ค่าจากไฟล์ลงใน baseGas
-            for (int r = 0; r < this.row; r++) {
-                String[] values = lines.get(r).split("\\s+");
-                for (int c = 0; c < maxCols; c++) {
-                    if (c < values.length) {
+            for (int row = 0; row < this.row; row++) {
+                String[] values = lines.get(row).split("\\s+");
+                for (int column = 0; column < maxCols; column++) {
+                    if (column < values.length) {
                         try {
-                            System.out.println(values[c]);
-                            baseGas[r][c] = Double.parseDouble(values[c]);
+
+                            baseGas[row][column] = Double.parseDouble(values[column]);
+                            if (Double.isNaN(baseGas[row][column] )) {
+                                baseGas[row][column] = 0.0;
+                            }
                         } catch (NumberFormatException e) {
-                            baseGas[r][c] = 0.0; // ถ้าไม่ใช่ตัวเลข ใส่ 0
-                            System.out.println("Invalid number at [" + r + "," + c + "], set to 0");
+                            baseGas[row][column] = 0.0; // ถ้าไม่ใช่ตัวเลข ใส่ 0
                         }
                     } else {
-                        baseGas[r][c] = 0.0; // ถ้าจำนวนน้อยกว่าความกว้างสูงสุด ให้เติม 0
+                        baseGas[row][column] = 0.0; // ถ้าจำนวนน้อยกว่าความกว้างสูงสุด ให้เติม 0
                     }
                 }
             }
@@ -144,7 +146,7 @@ public class PanelManager {
         for (int i = 0; i < baseGas.length; i++) {
             for (int j = 0; j < baseGas[0].length; j++) {
                 JPanel panel = new JPanel(new BorderLayout());
-                double percent = getPercent(baseGas[i][j]) ;
+                double percent = getPercent(baseGas[i][j]);
 
                 // แสดงเปอร์เซ็นต์ตรงกลางปุ่ม
                 JLabel percent_Text = new JLabel(String.format("%.0f%%", percent), SwingConstants.CENTER);
@@ -203,21 +205,27 @@ public class PanelManager {
             panel.setBorder(BorderFactory.createLineBorder(Color.white));
         }
 
-        public void mouseClicked(MouseEvent e) {}
-        public void mousePressed(MouseEvent e) {}
-        public void mouseReleased(MouseEvent e) {}
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        public void mousePressed(MouseEvent e) {
+        }
+
+        public void mouseReleased(MouseEvent e) {
+        }
     }
 
     // ตั้งค่าข้อมูลลงใน monitor
     void setLabelData(JPanel panel, double base) {
-        String label = String.format("<html>Percent | %.2f%%<br>Volume | %.2f<html>", getPercent(base), getVolume(base));
+        String label = String.format("<html>Percent | %.2f%%<br>Volume | %.2f<html>", getPercent(base),
+                getVolume(base));
         panel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         monitor.setText(label);
     }
 
     // คำนวณเปอร์เซ็นต์แก๊ส
     private double getPercent(double baseDepth) {
-        if (baseDepth < 1){
+        if (baseDepth < 1) {
             return 0.0;
         }
         double topHorizon = baseDepth - 200;
@@ -230,7 +238,7 @@ public class PanelManager {
 
     // คำนวณปริมาตรแก๊ส
     private double getVolume(double baseDepth) {
-        if (baseDepth < 1){
+        if (baseDepth < 1) {
             return 0.0;
         }
         double topHorizon = baseDepth - 200;
@@ -297,8 +305,13 @@ public class PanelManager {
             FrameMain.setVisible(false);
         });
 
-        // เมื่อกดปุ่ม EXIT 
-        button_exit.addActionListener(e -> System.exit(0));
+        // เมื่อกดปุ่ม EXIT
+        button_exit.addActionListener(e -> {
+            int result = JOptionPane.showConfirmDialog(null, "Sure?", "ยืนยันการออก", JOptionPane.OK_CANCEL_OPTION);
+            if (result == JOptionPane.OK_OPTION) {
+                System.exit(0);
+            }
+        });
 
         return panel;
     }
@@ -415,10 +428,13 @@ public class PanelManager {
 
     // ล้างข้อมูลทั้งหมด
     private void clearButton() {
-        baseGas = new Double[0][0];
-        this.row = 0;
-        this.column = 0;
-        clearGridPanel();
+        int result = JOptionPane.showConfirmDialog(null, "Sure?", "Clear Data", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            baseGas = new Double[0][0];
+            this.row = 0;
+            this.column = 0;
+            clearGridPanel();
+        }
     }
 
     // อัพเดตข้อมูลตามค่าที่ใส่ใน Fluid_level
