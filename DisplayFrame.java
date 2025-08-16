@@ -2,23 +2,32 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DisplayFrame extends JFrame {
+    private PanelManager panelManager;
+    
     public DisplayFrame() {
         setFrame();
-        PanelManager PanelManager = new PanelManager(this);
-
-        JPanel panel_north = PanelManager.panel_north();
-        JPanel panel_center = PanelManager.panel_center();
-        JPanel panel_south = PanelManager.panel_south();
-        JPanel panel_East = PanelManager.panel_East();
+        setPadding(); // เรียกก่อนเพื่อ setup padding panels
         
-        setPadding(); // ⚠ ตรงนี้จะ add panel_east เข้า BorderLayout.EAST
+        panelManager = new PanelManager(this);
+
+        JPanel panel_north = panelManager.panel_north();
+        JPanel panel_center = panelManager.panel_center();
+        JPanel panel_south = panelManager.panel_south();
+        JPanel panel_East = panelManager.panel_East();
 
         add(panel_south, BorderLayout.SOUTH);
         add(panel_north, BorderLayout.NORTH);
         add(panel_center, BorderLayout.CENTER);
-        add(panel_East, BorderLayout.EAST); 
-        // ⚠ ตรงนี้ก็ add panel_East เข้า BorderLayout.EAST อีกครั้ง 
-        // จะทำให้ panel_east จาก setPadding() โดนแทนที่ (component เดิมหาย)
+        add(panel_East, BorderLayout.EAST);
+    }
+    
+    // Method สำหรับ refresh GridPanel เมื่อกลับมาจาก About
+    public void refreshDisplay() {
+        if (panelManager != null) {
+            panelManager.refreshGrid();
+        }
+        repaint();
+        revalidate();
     }
 
     public void setPadding() {
@@ -27,11 +36,6 @@ public class DisplayFrame extends JFrame {
         panel_west.setPreferredSize(new Dimension(40, 0));
         panel_west.setBackground(GasConstants.COLOR_WINDOW);
 
-        JPanel panel_east = new JPanel();
-        panel_east.setPreferredSize(new Dimension(40, 0));
-        panel_east.setBackground(GasConstants.COLOR_WINDOW);
-
-        add(panel_east, BorderLayout.EAST); // ⚠ จุดนี้ชนกับ panel_East ข้างบน
         add(panel_west, BorderLayout.WEST);
         
     }
@@ -43,7 +47,6 @@ public class DisplayFrame extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         setResizable(false);
-        // ปิดเเถบข้างบน พวก x - []
         setUndecorated(true);
 
         getContentPane().setBackground(GasConstants.COLOR_WINDOW);

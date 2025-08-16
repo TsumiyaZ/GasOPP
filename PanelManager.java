@@ -40,6 +40,24 @@ public class PanelManager {
     // ================= { Function } =================
     // ========= [ เปิดไฟล์ ] =========
     private void openFile() {
+        // ตรวจสอบว่ามีข้อมูลอยู่แล้วหรือไม่
+        if (this.row > 0 && this.column > 0) {
+            int result = JOptionPane.showConfirmDialog(null, 
+                "Are you clear File Data?", 
+                "ยืนยันการเปิดไฟล์ใหม่", 
+                JOptionPane.YES_NO_OPTION);
+            
+            if (result != JOptionPane.YES_OPTION) {
+                return; // ยกเลิกการเปิดไฟล์
+            }
+            
+            // ล้างข้อมูลเก่า
+            clearGridPanel();
+            baseGas = new Double[0][0];
+            this.row = 0;
+            this.column = 0;
+        }
+        
         JFileChooser file_choose = new JFileChooser();
         file_choose.setCurrentDirectory(new File("DataGas")); // ตั้งโฟลเดอร์เริ่มต้น
 
@@ -183,6 +201,19 @@ public class PanelManager {
             GridPanel.repaint();
         }
     }
+    
+    // Method สำหรับ refresh GridPanel เมื่อกลับมาจาก About
+    public void refreshGrid() {
+        if (GridPanel != null) {
+            GridPanel.revalidate();
+            GridPanel.repaint();
+            // Force repaint ทุก component ใน GridPanel
+            Component[] components = GridPanel.getComponents();
+            for (Component comp : components) {
+                comp.repaint();
+            }
+        }
+    }
 
     // ========= [ คลาสสำหรับจัดการ Mouse Event ในแต่ละ cell ] =========
     private class MouseFunction implements MouseListener {
@@ -300,9 +331,8 @@ public class PanelManager {
 
         // เมื่อกดปุ่ม about
         button_about.addActionListener(e -> {
-            AboutGroup about = new AboutGroup(FrameMain);
+            AboutDialog about = new AboutDialog(FrameMain);
             about.setVisible(true);
-            FrameMain.setVisible(false);
         });
 
         // เมื่อกดปุ่ม EXIT
@@ -402,13 +432,7 @@ public class PanelManager {
         JButton button_cal = createButtonCalculate("CALCULATE", 300, 50);
         JButton button_clear = creaButtonClear("CLEAR", 120, 25);
 
-        button_openFile.addActionListener(e -> {
-            if (GridPanel != null) {
-                GridPanel.removeAll();
-                GridPanel.revalidate();
-            }
-            openFile();
-        });
+        button_openFile.addActionListener(e -> openFile());
         button_clear.addActionListener(e -> clearButton());
         button_cal.addActionListener(e -> updateData());
 
