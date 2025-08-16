@@ -94,26 +94,26 @@ public class PanelManager {
     // ========= [ อ่านข้อมูลจากไฟล์ใส่ baseGas ] =========
     void getDataInFile(File select_File) {
         try (BufferedReader read = new BufferedReader(new FileReader(select_File))) {
-            ArrayList<String> lines = new ArrayList<>();
+            ArrayList<String> List_Line = new ArrayList<>();
 
             // อ่านข้อมูลทีละบรรทัด เก็บใน ArrayList
             String line;
             while ((line = read.readLine()) != null) {
                 line = line.trim();
                 if (!line.isEmpty()) {
-                    lines.add(line);
+                    List_Line.add(line);
                 }
             }
 
             // ถ้าไฟล์ว่าง
-            if (lines.isEmpty()) {
+            if (List_Line.isEmpty()) {
                 System.out.println("File is empty");
                 return;
             }
 
             // หา column สูงสุด
             int MAX_Cols = 0;
-            for (String liness : lines) {
+            for (String liness : List_Line) {
                 String[] values = liness.split("\\s+");
                 MAX_Cols = Math.max(MAX_Cols, values.length);
             }
@@ -121,7 +121,7 @@ public class PanelManager {
             // จํานวน column สูงสุด
             this.column = MAX_Cols;
             // จำนวนแถว
-            this.row = lines.size();
+            this.row = List_Line.size();
 
             // สร้าง array baseGas
             baseGas = new Double[this.row][this.column];
@@ -131,7 +131,7 @@ public class PanelManager {
 
             // ใส่ค่าจากไฟล์ลงใน baseGas
             for (int row = 0; row < this.row; row++) {
-                String[] values = lines.get(row).split("\\s+");
+                String[] values = List_Line.get(row).split("\\s+");
                 for (int column = 0; column < MAX_Cols; column++) {
                     if (column < values.length) {
                         try {
