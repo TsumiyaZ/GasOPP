@@ -151,7 +151,7 @@ public class AboutGroup extends JFrame {
         JPanel[] panels = new JPanel[3]; // มี 3 คน
         for (int i = 0; i < panels.length; i++) {
             panels[i] = new JPanel();
-            panels[i].setPreferredSize(new Dimension(150, 200)); // ขนาดเท่ากัน
+            panels[i].setPreferredSize(new Dimension(200, 200)); // ขนาดเท่ากัน
             panels[i].setBorder(new LineBorder(Color.BLACK, 2)); // เส้นกรอบ
         }
         return panels;
@@ -160,7 +160,7 @@ public class AboutGroup extends JFrame {
     // สร้าง JLabel ใส่รูป (ย่อสัดส่วน)
     public JLabel createPictureLabel(String path) {
         ImageIcon icon = new ImageIcon(path); // โหลดรูปจาก path
-        Image scaled = icon.getImage().getScaledInstance(130, 185, Image.SCALE_SMOOTH); // ย่อรูป
+        Image scaled = icon.getImage().getScaledInstance(185, 185, Image.SCALE_SMOOTH); // ย่อรูป
         return new JLabel(new ImageIcon(scaled)); // สร้าง JLabel เก็บรูป
     }
 
