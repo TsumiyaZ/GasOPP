@@ -11,7 +11,7 @@ public class PanelManager {
     private DisplayFrame FrameMain;
 
     // เก็บข้อมูลฐานแก๊ส (จากไฟล์)
-    private int[][] baseGas;
+    private Double[][] baseGas;
 
     // ค่าระดับของ fluid contact (ค่า default มาจาก GasConstants)
     private int fluld = GasConstants.FLULD_CONTACT;
@@ -55,8 +55,9 @@ public class PanelManager {
             // อ่านข้อมูลจากไฟล์มาใส่ baseGas
             getDataInFile(select_File);
 
+            checkDataInFile();
             // สร้างปุ่ม grid จากข้อมูลในไฟล์
-            createGridButton();
+            createGridButton();     
 
         } else {
             System.out.println("No file select");
@@ -105,7 +106,7 @@ public class PanelManager {
             this.column = maxCols;
 
             // สร้าง array baseGas
-            baseGas = new int[this.row][this.column];
+            baseGas = new Double[this.row][this.column];
 
             // อ่านค่าจากช่อง Fluid_level
             this.fluld = Integer.parseInt(this.Fluid_level.getText());
@@ -116,13 +117,14 @@ public class PanelManager {
                 for (int c = 0; c < maxCols; c++) {
                     if (c < values.length) {
                         try {
-                            baseGas[r][c] = Integer.parseInt(values[c]);
+                            System.out.println(values[c]);
+                            baseGas[r][c] = Double.parseDouble(values[c]);
                         } catch (NumberFormatException e) {
-                            baseGas[r][c] = 0; // ถ้าไม่ใช่ตัวเลข ใส่ 0
+                            baseGas[r][c] = 0.0; // ถ้าไม่ใช่ตัวเลข ใส่ 0
                             System.out.println("Invalid number at [" + r + "," + c + "], set to 0");
                         }
                     } else {
-                        baseGas[r][c] = 0; // ถ้าจำนวนน้อยกว่าความกว้างสูงสุด ให้เติม 0
+                        baseGas[r][c] = 0.0; // ถ้าจำนวนน้อยกว่าความกว้างสูงสุด ให้เติม 0
                     }
                 }
             }
@@ -142,7 +144,7 @@ public class PanelManager {
         for (int i = 0; i < baseGas.length; i++) {
             for (int j = 0; j < baseGas[0].length; j++) {
                 JPanel panel = new JPanel(new BorderLayout());
-                double percent = getPercent(baseGas[i][j]);
+                double percent = getPercent(baseGas[i][j]) ;
 
                 // แสดงเปอร์เซ็นต์ตรงกลางปุ่ม
                 JLabel percent_Text = new JLabel(String.format("%.0f%%", percent), SwingConstants.CENTER);
@@ -182,10 +184,10 @@ public class PanelManager {
 
     // ========= [ คลาสสำหรับจัดการ Mouse Event ในแต่ละ cell ] =========
     private class MouseFunction implements MouseListener {
-        private int base;
+        private double base;
         private JPanel panel;
 
-        MouseFunction(int base, JPanel panel) {
+        MouseFunction(double base, JPanel panel) {
             this.base = base;
             this.panel = panel;
         }
@@ -207,16 +209,19 @@ public class PanelManager {
     }
 
     // ตั้งค่าข้อมูลลงใน monitor
-    void setLabelData(JPanel panel, int base) {
+    void setLabelData(JPanel panel, double base) {
         String label = String.format("<html>Percent | %.2f%%<br>Volume | %.2f<html>", getPercent(base), getVolume(base));
         panel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         monitor.setText(label);
     }
 
     // คำนวณเปอร์เซ็นต์แก๊ส
-    private double getPercent(int baseDepth) {
-        int topHorizon = baseDepth - 200;
-        int fluld = this.fluld;
+    private double getPercent(double baseDepth) {
+        if (baseDepth < 1){
+            return 0.0;
+        }
+        double topHorizon = baseDepth - 200;
+        double fluld = this.fluld;
 
         double total = baseDepth - topHorizon;
         double gas = Math.max(0, Math.min(fluld, baseDepth) - topHorizon);
@@ -224,11 +229,14 @@ public class PanelManager {
     }
 
     // คำนวณปริมาตรแก๊ส
-    private double getVolume(int baseDepth) {
-        int topHorizon = baseDepth - 200;
-        int fluld = this.fluld;
+    private double getVolume(double baseDepth) {
+        if (baseDepth < 1){
+            return 0.0;
+        }
+        double topHorizon = baseDepth - 200;
+        double fluld = this.fluld;
 
-        int thickness = fluld - topHorizon;
+        double thickness = fluld - topHorizon;
         if (thickness <= 0) {
             return 0; // ไม่มีแก๊ส
         }
@@ -407,7 +415,7 @@ public class PanelManager {
 
     // ล้างข้อมูลทั้งหมด
     private void clearButton() {
-        baseGas = new int[0][0];
+        baseGas = new Double[0][0];
         this.row = 0;
         this.column = 0;
         clearGridPanel();
