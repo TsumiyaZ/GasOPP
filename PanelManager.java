@@ -164,6 +164,7 @@ public class PanelManager {
         for (int i = 0; i < baseGas.length; i++) {
             for (int j = 0; j < baseGas[0].length; j++) {
                 JPanel panel = new JPanel(new BorderLayout());
+                panel.setBorder(BorderFactory.createLineBorder(Color.white, 2));
                 double percent = getPercent(baseGas[i][j]);
 
                 // แสดงเปอร์เซ็นต์ตรงกลางปุ่ม
