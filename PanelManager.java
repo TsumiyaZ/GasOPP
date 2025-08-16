@@ -93,7 +93,8 @@ public class PanelManager {
 
     // ========= [ อ่านข้อมูลจากไฟล์ใส่ baseGas ] =========
     void getDataInFile(File select_File) {
-        try (BufferedReader read = new BufferedReader(new FileReader(select_File))) {
+        try (
+            BufferedReader read = new BufferedReader(new FileReader(select_File))) {
             ArrayList<String> List_Line = new ArrayList<>();
 
             // อ่านข้อมูลทีละบรรทัด เก็บใน ArrayList
@@ -135,13 +136,12 @@ public class PanelManager {
                 for (int column = 0; column < MAX_Cols; column++) {
                     if (column < values.length) {
                         try {
-
                             baseGas[row][column] = Double.parseDouble(values[column]);
                             if (Double.isNaN(baseGas[row][column] )) {
-                                baseGas[row][column] = 0.0;
+                                baseGas[row][column] = -1.0;
                             }
                         } catch (NumberFormatException e) {
-                            baseGas[row][column] = 0.0; // ถ้าไม่ใช่ตัวเลข ใส่ 0
+                            baseGas[row][column] = -1.0; // ถ้าไม่ใช่ตัวเลข ใส่ 0
                         }
                     } else {
                         baseGas[row][column] = -1.0; // ถ้าจำนวนน้อยกว่าความกว้างสูงสุด ให้เติม 0
@@ -261,12 +261,13 @@ public class PanelManager {
         if (baseDepth < 0) {
             return 0.0;
         }
-        double topHorizon = baseDepth - 200;
-        double fluld = this.fluld;
+        double topHorizon = baseDepth - 200; // 2900 - 200 = 2700
+        double fluld = this.fluld; // 2500
 
-        double total = baseDepth - topHorizon;
-        double gas = Math.max(0, Math.min(fluld, baseDepth) - topHorizon);
-        return gas / total * 100;
+        
+        double total = baseDepth - topHorizon; // 2900 - 2700 = 200
+        double gas = Math.max(0, Math.min(fluld, baseDepth) - topHorizon); // min (2500, 2900) = 2500 - 2700 = -200 , max(0, -200) = 0
+        return gas / total * 100; // 0 / 200 = 0% ไม่มีเเก๊ส
     }
 
     // คำนวณปริมาตรแก๊ส
