@@ -126,7 +126,7 @@ public class PanelManager {
                             baseGas[row][column] = 0.0; // ถ้าไม่ใช่ตัวเลข ใส่ 0
                         }
                     } else {
-                        baseGas[row][column] = 0.0; // ถ้าจำนวนน้อยกว่าความกว้างสูงสุด ให้เติม 0
+                        baseGas[row][column] = -1.0; // ถ้าจำนวนน้อยกว่าความกว้างสูงสุด ให้เติม 0
                     }
                 }
             }
@@ -225,7 +225,7 @@ public class PanelManager {
 
     // คำนวณเปอร์เซ็นต์แก๊ส
     private double getPercent(double baseDepth) {
-        if (baseDepth < 1) {
+        if (baseDepth < 0) {
             return 0.0;
         }
         double topHorizon = baseDepth - 200;
@@ -238,7 +238,7 @@ public class PanelManager {
 
     // คำนวณปริมาตรแก๊ส
     private double getVolume(double baseDepth) {
-        if (baseDepth < 1) {
+        if (baseDepth < 0) {
             return 0.0;
         }
         double topHorizon = baseDepth - 200;
