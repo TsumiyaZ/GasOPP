@@ -5,8 +5,6 @@ import java.awt.*;
 public class AboutDialog extends JDialog {
 
     public AboutDialog(JFrame parent) {
-        super(parent, "About Group", true); // modal dialog
-        
         setSize(GasConstants.WINDOW_WIDTH, GasConstants.WINDOW_HEIGHT);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
@@ -17,7 +15,7 @@ public class AboutDialog extends JDialog {
 
         // เรียกเมธอดสร้างแต่ละส่วนของ dialog
         createSouthPanel();  // ปุ่ม Close ด้านล่าง
-        createTopicPanel();  // หัวข้อด้านบน
+        createNorthPanel();  // หัวข้อด้านบน
         createContentPanel(); // เนื้อหากลาง (รูป + ชื่อ + ID)
     }
 
@@ -44,7 +42,7 @@ public class AboutDialog extends JDialog {
     }
 
     // ส่วนบน (North Panel) แสดงหัวข้อ "About Group"
-    private void createTopicPanel() {
+    private void createNorthPanel() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBackground(GasConstants.COLOR_WINDOW);
         panel.setBorder(new LineBorder(Color.BLACK, 2));
@@ -85,8 +83,7 @@ public class AboutDialog extends JDialog {
     private JLabel[] createLabels() {
         JLabel[] labels = new JLabel[3];
         for (int i = 0; i < labels.length; i++) {
-            String data = "<html>NAME : " + GasConstants.GAS_NAME_TEXT[i]
-                    + "<br>ID : " + GasConstants.GAS_ID_TEXT[i] + "</html>";
+            String data = "<html>NAME : " + GasConstants.GAS_NAME_TEXT[i] + "<br>ID : " + GasConstants.GAS_ID_TEXT[i] + "</html>";
 
             labels[i] = new JLabel(data);
             labels[i].setFont(new Font(null, Font.BOLD, 24));
