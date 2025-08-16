@@ -55,7 +55,6 @@ public class PanelManager {
             // อ่านข้อมูลจากไฟล์มาใส่ baseGas
             getDataInFile(select_File);
 
-            checkDataInFile();
             // สร้างปุ่ม grid จากข้อมูลในไฟล์
             createGridButton();
 
@@ -94,16 +93,17 @@ public class PanelManager {
                 return;
             }
 
-            // จำนวนแถว
-            this.row = lines.size();
-
             // หา column สูงสุด
-            int maxCols = 0;
+            int MAX_Cols = 0;
             for (String liness : lines) {
                 String[] values = liness.split("\\s+");
-                maxCols = Math.max(maxCols, values.length);
+                MAX_Cols = Math.max(MAX_Cols, values.length);
             }
-            this.column = maxCols;
+
+            // จํานวน column สูงสุด
+            this.column = MAX_Cols;
+            // จำนวนแถว
+            this.row = lines.size();
 
             // สร้าง array baseGas
             baseGas = new Double[this.row][this.column];
